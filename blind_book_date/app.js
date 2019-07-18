@@ -94,6 +94,34 @@ $( () => {
       $('#book-container').empty();
       $('#book-container').append(`<p>${app.summaryArray[app.currentIndex]}</p>`);
     },
+
+    // ===============
+    // returnDates()
+    // Runs upon swipe left or right when app.clicks === userInput.bookAmt
+    // Prints all the user's matches to the DOM
+    // ===============
+    returnDates: () => {
+      $('main').empty();
+      let $resultsContainer = $('<div>').addClass('results-container');
+      for (let i = 0; i < app.summaryArray.length; i++){
+        let innerhtml =
+        `<div class=result>
+          <div class=cover-container>
+            <img src="${app.coverArray[i]}">
+          </div>
+          <div class=details-container>
+            <ul>
+              <li>title: ${app.titleArray[i]}</li>
+              <li>author: ${app.authorArray[i]}</li>
+              <li>summary: ${app.summaryArray[i]}</li>
+            </ul>
+          </div>
+        </div>
+        `;
+        $resultsContainer.append(innerhtml);
+      }
+      $('main').append($resultsContainer);
+    }
   };
 
 
@@ -141,7 +169,7 @@ $( () => {
       app.coverArray.splice(index, 1);
       app.authorArray.splice(index, 1);
       if (app.clicks >= userInput.bookAmt){
-        console.log("time to show the user their lucky dates!");
+        app.returnDates();
       } else {
         app.updateDOM();
       }
@@ -156,7 +184,7 @@ $( () => {
       app.clicks++;
       app.currentIndex++;
       if (app.clicks >= userInput.bookAmt){
-        console.log("time to show the user their lucky dates");
+        app.returnDates();
       } else {
         app.updateDOM();
       }
