@@ -18,6 +18,7 @@ $( () => {
     coverArray: [],
     authorArray: [],
     currentIndex: 0,
+    clicks: 0,
 
     // ===============
     // runGame(index)
@@ -25,20 +26,10 @@ $( () => {
     // Runs user input as parameters in the API, then filters the data through app.populateArrays()
     // ===============
       runGame: (index) => {
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=${userInput.bookAmt + 10}&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
-          console.log(data);
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
           app.populateArrays(data);
           app.printDOM();
         })
-      },
-
-    // ===============
-    // clearMain()
-    // Runs inside of this.printDOM()
-    // Clears the main div to make room for the next stage of the game
-    // ===============
-      clearMain: () => {
-        $('main').empty();
       },
 
     // ===============
@@ -48,8 +39,9 @@ $( () => {
     // ===============
     populateArrays: (data) => {
       this.bookArray = data.items;
+      let b = 0;
       let i = 0;
-      while (i < userInput.bookAmt){
+      while (b < userInput.bookAmt){
         let bookInfo = this.bookArray[i].volumeInfo;
         if (bookInfo.description && bookInfo.imageLinks){
           if (bookInfo.description.length > 200){
@@ -61,6 +53,7 @@ $( () => {
             app.titleArray.push(title);
             app.coverArray.push(cover);
             app.authorArray.push(author);
+            b++;
           }
         }
         i++
@@ -70,17 +63,17 @@ $( () => {
   // ===============
   // printDOM()
   // Runs inside of this.runGame()
-  // Pulls the first summary in this.summaryArray and prints it to the DOM. Also sets up the initial HTML for the main div.
+  // Prints the first summary and necessary buttons the first time. See updateDOM() for more.
   // ===============
     printDOM: () => {
-      app.clearMain();
+      $('main').empty();
       let innerhtml =
         `<div class=tinder-container>
           <div class=swipe-container>
             <button id="swipe-left"></button>
             <p>Swipe Left</p>
           </div>
-          <div class=book-container>
+          <div id=book-container>
             <p>${app.summaryArray[app.currentIndex]}</p>
           </div>
           <div class=swipe-container>
@@ -89,7 +82,18 @@ $( () => {
           </div>`;
       $('main').append(innerhtml);
       $('#swipe-left').on('click', eventHandlers.leftSwipe);
-    }
+      $('#swipe-right').on('click', eventHandlers.rightSwipe)
+    },
+
+    // ===============
+    // updateDOM()
+    // Runs inside of the left and right click event handlers
+    // Updates the book-container div with a new summary
+    // ===============
+    updateDOM: () => {
+      $('#book-container').empty();
+      $('#book-container').append(`<p>${app.summaryArray[app.currentIndex]}</p>`);
+    },
   };
 
 
@@ -105,7 +109,11 @@ $( () => {
   // ===============
     updateVal: () => {
       let $id = $(event.currentTarget).attr('id');
-      userInput[$id] = $(event.currentTarget).val();
+      if ($id === "bookAmt"){
+        userInput[$id] = parseInt($(event.currentTarget).val())
+      } else {
+        userInput[$id] = $(event.currentTarget).val();
+      }
     },
 
   // ===============
@@ -126,13 +134,34 @@ $( () => {
     // Removes the currently displayed summary from all relevant arrays and displays a new summary
     // ===============
     leftSwipe: () => {
+      app.clicks++;
       let index = app.currentIndex;
       app.summaryArray.splice(index, 1);
       app.titleArray.splice(index, 1);
       app.coverArray.splice(index, 1);
       app.authorArray.splice(index, 1);
-      app.printDOM();
+      if (app.clicks >= userInput.bookAmt){
+        console.log("time to show the user their lucky dates!");
+      } else {
+        app.updateDOM();
+      }
+    },
+
+    // ===============
+    // rightSwipe()
+    // Runs on swipe-right button click
+    // Moves on to the next summary
+    // ===============
+    rightSwipe: () => {
+      app.clicks++;
+      app.currentIndex++;
+      if (app.clicks >= userInput.bookAmt){
+        console.log("time to show the user their lucky dates");
+      } else {
+        app.updateDOM();
+      }
     }
+
   };
 
   // =========================================================
