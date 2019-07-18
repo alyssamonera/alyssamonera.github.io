@@ -5,10 +5,64 @@
     <!-- STYLES -->
     <link rel="stylesheet" href="style.css">
     <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="app.js"></script>
     <title></title>
   </head>
   <body>
-    <p>hello world!</p>
+    <!-- //////////////
+    SITE-WIDE CONTAINER
+      ///////////////-->
+    <div class="site-container">
+    <!--//////////
+        HEADER
+      ////////// -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">API</a></li>
+        </ul>
+      </nav>
+      <div class="header text">
+        <h1>Blind Book Dating</h1>
+        <h6>Don't judge a book by its cover!</h6>
+      </div>
+    </header>
+
+    <!-- ////////////
+      MAIN: INPUT FIELDS
+      /////////////-->
+    <main>
+      <div class="options-div">
+        <form class="genre-form">
+
+          <h3>What genre are you looking for?</h3>
+
+          <select class="genre">
+            <option value="Fiction">Fiction</option>
+            <option value="Romance">Romance</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Nonfiction">Nonfiction</option>
+          </select>
+
+        </form>
+
+        <div class="input-div">
+          <h3>How many books are you ready to meet today?</h3>
+          <input type="number" name="numOfBooks" min="5" max="10" step="1">
+        </div>
+      </div>
+
+      <div class="go-div">
+        <button>Go</button>
+      </div>
+
+    </main>
+
+    </div>
   </body>
 </html>
