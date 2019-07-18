@@ -8,18 +8,31 @@ $( () => {
     bookAmt: 5
   };
 
-  // =========================================================
-  //                       APP LOGIC
-  // =========================================================
-  const app = {
+  const userLibrary = {
     bookArray: [],
     summaryArray: [],
     titleArray: [],
     coverArray: [],
     authorArray: [],
+    datesArray: [],
     currentIndex: 0,
-    clicks: 0,
+    likedBooks: 0,
+    addNewDate: () => {
+      let index = userLibrary.currentIndex;
+      let newDate = {
+        title: userLibrary.titleArray[index],
+        author: userLibrary.authorArray[index],
+        summary: userLibrary.summaryArray[index],
+        cover: userLibrary.coverArray[index]
+      };
+      userLibrary.datesArray.push(newDate);
+    }
+  }
 
+  // =========================================================
+  //                       APP LOGIC
+  // =========================================================
+  const app = {
     // ===============
     // runGame(index)
     // Runs inside of eventHandlers.prepareGame()
@@ -38,26 +51,24 @@ $( () => {
     // Stores the summaries, titles, authors, and cover image URLs into appropriate arrays
     // ===============
     populateArrays: (data) => {
-      this.bookArray = data.items;
-      let b = 0;
-      let i = 0;
-      while (b < userInput.bookAmt){
-        let bookInfo = this.bookArray[i].volumeInfo;
-        if (bookInfo.description && bookInfo.imageLinks){
+      userLibrary.bookArray = data.items;
+      console.log(data);
+      for (let i = 0; i < userLibrary.bookArray.length; i++){
+        let bookInfo = userLibrary.bookArray[i].volumeInfo;
+        if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
           if (bookInfo.description.length > 200){
             let author = bookInfo.authors[0];
             let summary = bookInfo.description;
             let title = bookInfo.title;
             let cover = bookInfo.imageLinks.thumbnail;
-            app.summaryArray.push(summary);
-            app.titleArray.push(title);
-            app.coverArray.push(cover);
-            app.authorArray.push(author);
-            b++;
+            userLibrary.summaryArray.push(summary);
+            userLibrary.titleArray.push(title);
+            userLibrary.coverArray.push(cover);
+            userLibrary.authorArray.push(author);
           }
         }
-        i++
       }
+      console.log(userLibrary.summaryArray.length);
     },
 
   // ===============
@@ -74,7 +85,7 @@ $( () => {
             <p>Swipe Left</p>
           </div>
           <div id=book-container>
-            <p>${app.summaryArray[app.currentIndex]}</p>
+            <p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>
           </div>
           <div class=swipe-container>
             <button id="swipe-right"></button>
@@ -92,33 +103,43 @@ $( () => {
     // ===============
     updateDOM: () => {
       $('#book-container').empty();
-      $('#book-container').append(`<p>${app.summaryArray[app.currentIndex]}</p>`);
+      $('#book-container').append(`<p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>`);
     },
 
     // ===============
     // returnDates()
-    // Runs upon swipe left or right when app.clicks === userInput.bookAmt
+    // Runs upon swipe left or right when userLibrary.likedBooks === userInput.bookAmt
     // Prints all the user's matches to the DOM
     // ===============
     returnDates: () => {
       $('main').empty();
       let $resultsContainer = $('<div>').addClass('results-container');
-      for (let i = 0; i < app.summaryArray.length; i++){
+      for (let i = 0; i < userLibrary.datesArray.length; i++){
+        let cover = userLibrary.datesArray[i].cover;
+        let title = userLibrary.datesArray[i].title;
+        let author = userLibrary.datesArray[i].author;
+        let summary = userLibrary.datesArray[i].summary;
         let innerhtml =
         `<div class=result>
           <div class=cover-container>
-            <img src="${app.coverArray[i]}">
+            <img src="${cover}">
           </div>
           <div class=details-container>
             <ul>
-              <li>title: ${app.titleArray[i]}</li>
-              <li>author: ${app.authorArray[i]}</li>
-              <li>summary: ${app.summaryArray[i]}</li>
+              <li>title: ${title}</li>
+              <li>author: ${author}</li>
+              <li>summary: ${summary}</li>
             </ul>
           </div>
-        </div>
-        `;
+        </div>`;
         $resultsContainer.append(innerhtml);
+      }
+      if (userLibrary.datesArray.length <= userInput.bookAmt){
+        let apology =
+        `<div class=message>
+          <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
+        </div>`;
+        $resultsContainer.prepend(apology);
       }
       $('main').append($resultsContainer);
     }
@@ -162,15 +183,11 @@ $( () => {
     // Removes the currently displayed summary from all relevant arrays and displays a new summary
     // ===============
     leftSwipe: () => {
-      app.clicks++;
-      let index = app.currentIndex;
-      app.summaryArray.splice(index, 1);
-      app.titleArray.splice(index, 1);
-      app.coverArray.splice(index, 1);
-      app.authorArray.splice(index, 1);
-      if (app.clicks >= userInput.bookAmt){
+      let index = userLibrary.currentIndex;
+      if (!userLibrary.summaryArray[index] || !userLibrary.summaryArray[index+1]){
         app.returnDates();
       } else {
+        userLibrary.currentIndex++;
         app.updateDOM();
       }
     },
@@ -181,9 +198,11 @@ $( () => {
     // Moves on to the next summary
     // ===============
     rightSwipe: () => {
-      app.clicks++;
-      app.currentIndex++;
-      if (app.clicks >= userInput.bookAmt){
+      userLibrary.addNewDate();
+      userLibrary.likedBooks++;
+      userLibrary.currentIndex++;
+      let index = userLibrary.currentIndex;
+      if (userLibrary.likedBooks >= userInput.bookAmt || !userLibrary.summaryArray[index]){
         app.returnDates();
       } else {
         app.updateDOM();
