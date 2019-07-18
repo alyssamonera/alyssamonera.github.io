@@ -16,6 +16,7 @@ $( () => {
     summaryArray: [],
     titleArray: [],
     coverArray: [],
+    authorArray: [],
     currentIndex: 0,
 
     // ===============
@@ -25,6 +26,7 @@ $( () => {
     // ===============
       runGame: (index) => {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=${userInput.bookAmt + 10}&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
+          console.log(data);
           app.populateArrays(data);
           app.printDOM();
         })
@@ -51,12 +53,14 @@ $( () => {
         let bookInfo = this.bookArray[i].volumeInfo;
         if (bookInfo.description && bookInfo.imageLinks){
           if (bookInfo.description.length > 200){
+            let author = bookInfo.authors[0];
             let summary = bookInfo.description;
             let title = bookInfo.title;
             let cover = bookInfo.imageLinks.thumbnail;
             app.summaryArray.push(summary);
             app.titleArray.push(title);
             app.coverArray.push(cover);
+            app.authorArray.push(author);
           }
         }
         i++
@@ -118,12 +122,15 @@ $( () => {
 
     // ===============
     // leftSwipe()
-    // Runs on left-swipe click
-    //
+    // Runs on swipe-left button click
+    // Removes the currently displayed summary from all relevant arrays and displays a new summary
     // ===============
     leftSwipe: () => {
       let index = app.currentIndex;
       app.summaryArray.splice(index, 1);
+      app.titleArray.splice(index, 1);
+      app.coverArray.splice(index, 1);
+      app.authorArray.splice(index, 1);
       app.printDOM();
     }
   };
