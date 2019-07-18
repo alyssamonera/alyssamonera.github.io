@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <!-- STYLES -->
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Roboto+Slab&display=swap" rel="stylesheet">
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="app.js"></script>
@@ -26,9 +27,9 @@
           <li><a href="#">API</a></li>
         </ul>
       </nav>
-      <div class="header text">
+      <div class="header-text">
         <h1>Blind Book Dating</h1>
-        <h6>Don't judge a book by its cover!</h6>
+        <h2>Don't judge a book by its cover!</h2>
       </div>
     </header>
 
@@ -51,9 +52,10 @@
 
         </form>
 
-        <div class="input-div">
+        <div class="number-form">
           <h3>How many books are you ready to meet today?</h3>
-          <input type="number" id="bookAmt" min="5" max="10" step="1">
+          <p>*The default is 5.</p>
+          <input type="number" id="bookAmt">
         </div>
       </div>
 

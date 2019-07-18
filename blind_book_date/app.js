@@ -52,7 +52,6 @@ $( () => {
     // ===============
     populateArrays: (data) => {
       userLibrary.bookArray = data.items;
-      console.log(data);
       for (let i = 0; i < userLibrary.bookArray.length; i++){
         let bookInfo = userLibrary.bookArray[i].volumeInfo;
         if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
@@ -68,7 +67,6 @@ $( () => {
           }
         }
       }
-      console.log(userLibrary.summaryArray.length);
     },
 
   // ===============
@@ -108,7 +106,7 @@ $( () => {
 
     // ===============
     // returnDates()
-    // Runs upon swipe left or right when userLibrary.likedBooks === userInput.bookAmt
+    // Runs upon swipe left or right when the user has found the desired amt of matches, or they run out of books
     // Prints all the user's matches to the DOM
     // ===============
     returnDates: () => {
@@ -134,7 +132,7 @@ $( () => {
         </div>`;
         $resultsContainer.append(innerhtml);
       }
-      if (userLibrary.datesArray.length <= userInput.bookAmt){
+      if (userLibrary.datesArray.length < userInput.bookAmt){
         let apology =
         `<div class=message>
           <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
@@ -177,11 +175,11 @@ $( () => {
         app.runGame(randomIndex)})
     },
 
-    // ===============
-    // leftSwipe()
-    // Runs on swipe-left button click
-    // Removes the currently displayed summary from all relevant arrays and displays a new summary
-    // ===============
+  // ===============
+  // leftSwipe()
+  // Runs on swipe-left button click
+  // Moves on to the next summary or runs the results method
+  // ===============
     leftSwipe: () => {
       let index = userLibrary.currentIndex;
       if (!userLibrary.summaryArray[index] || !userLibrary.summaryArray[index+1]){
@@ -192,11 +190,11 @@ $( () => {
       }
     },
 
-    // ===============
-    // rightSwipe()
-    // Runs on swipe-right button click
-    // Moves on to the next summary
-    // ===============
+  // ===============
+  // rightSwipe()
+  // Runs on swipe-right button click
+  // Adds a new book object to datesArray. Moves on to the next book or runs the results method.
+  // ===============
     rightSwipe: () => {
       userLibrary.addNewDate();
       userLibrary.likedBooks++;

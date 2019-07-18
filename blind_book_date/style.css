@@ -1,9 +1,133 @@
-*{
+/* GLOBAL */
+
+body{
+  margin: 0;
+  padding: 0;
   font-family: Arial;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+  transition: 1s;
+}
+
+a:hover{
+  color: brown;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+.site-container{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* NAVIGATION */
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+  padding: 1em;
+  width: 100%;
+  background-color: rgb(200,161,120);
+  list-style-type: none;
+}
+
+li{
+  display: inline-block;
+  font-size: 1.5em;
+  font-family: 'Roboto Slab', serif;
+  text-transform: lowercase;
+}
+
+/* HEADLINE */
+
+.header-text{
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 3em;
+}
+
+.header-text h1{
+  font-size: 5em;
+  margin-bottom: 0;
+}
+
+.header-text h2{
+  font-size: 1em;
+  margin-top: 0;
+}
+
+/* MAIN: ALL INPUT FIELDS */
+
+.options-div{
   text-align: center;
 }
 
-ul {
-  list-style-type: none;
-  margin-left: -3em;
+.options-div h3{
+  font-size: 1.5em;
+}
+
+/* SELECT FIELD */
+
+.genre-form{
+  margin-bottom: 5em;
+}
+
+select{
+  font-size: 3em;
+}
+
+/* NUMBER FIELD */
+
+.number-form{
+  margin-bottom: 5em;
+}
+
+.number-form h3{
+  margin-bottom: 0.5em;
+}
+
+.number-form p{
+  font-size: 1em;
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+/* found this solution here: https://www.thatstevensguy.com/programming/disable-arrows-on-number-inputs/ */
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]{
+  font-size: 3em;
+  text-align: center;
+}
+
+/* GO BUTTON */
+
+.go-div{
+  text-align: center;
+  margin: 3em;
+}
+
+.go-div button{
+  font-size: 3em;
+  padding: 1em;
+  border-radius: 1em;
+  background-color: rgb(50,100,50);
+  color: white;
+  font-family: 'Roboto Slab', serif;
+  text-transform: uppercase;
+  transition: 1s;
+}
+
+.go-div button:hover{
+  background-color: rgb(50,150,50);
 }
