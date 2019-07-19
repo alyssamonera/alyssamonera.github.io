@@ -6,7 +6,7 @@ $( () => {
   const userInput = {
     genre: $('#genre').children('option:selected').val(),
     bookAmt: 5,
-    key: config.book_key
+    key: undefined,
   };
 
   const userLibrary = {
@@ -93,7 +93,7 @@ $( () => {
   // ===============
   // printDOM()
   // Runs inside of this.runGame()
-  // Prints the first summary and necessary buttons the first time. See updateDOM() for more.
+  // Prints the first summary and necessary buttons the first time
   // ===============
     printDOM: () => {
       $('main').empty();
