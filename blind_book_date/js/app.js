@@ -65,7 +65,6 @@ $( () => {
   // Prints the first summary and necessary buttons the first time
   // ===============
     printDOM: () => {
-      console.log(userInput);
       $('main').empty();
       let summary = userLibrary.bookArray[0].summary;
       let innerhtml =
@@ -176,7 +175,7 @@ $( () => {
         eventHandlers.toggleModal()
       }
       else {
-        app.reset();
+        eventHandlers.reset();
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
           let minIndex = data.totalItems - 40;
           let randomIndex = Math.floor(Math.random() * minIndex);
