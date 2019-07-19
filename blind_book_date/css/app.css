@@ -1,0 +1,65 @@
+
+/* THE WHOLE CONTAINER */
+
+.tinder-container{
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  font-family: 'Playfair Display', serif;
+}
+
+/* SWIPE BUTTONS */
+
+.swipe-container{
+  align-self: center;
+  margin: 1em;
+}
+
+.swipe-container button{
+  font-size: 5em;
+  font-family: 'Playfair Display', serif;
+  width: 0.5em;
+  background-color: rgb(226,193,160);
+  color: white;
+  border-radius: 1em;
+}
+
+#swipe-left:hover{
+  background-color: red;
+  transition: 3s;
+}
+
+#swipe-right:hover{
+  background-color: green;
+  transition: 3s;
+}
+
+/* THE SUMMMARY */
+
+#book-container{
+  border: 1px solid black;
+  box-shadow: 5px 10px #888888;
+  width: 70%;
+  margin: 0.5em auto;
+  margin-bottom: 3em;
+  padding: 0.5em;
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+
+.read-more{
+  display: none;
+}
+
+.expand-button{
+  margin: 0.5em;
+  background-color: rgba(255,255,255,0);
+  font-size: 0.8em;
+}
+
+.expand-button:hover{
+  background-color: black;
+  color: white;
+}
