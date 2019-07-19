@@ -1,4 +1,8 @@
 $( () => {
+  // =========================================================
+  //                   GLOBAL VARIABLES
+  // =========================================================
+  var key = config.book_key;
 
   // =========================================================
   //                   USER INPUT OBJECT
@@ -39,7 +43,7 @@ $( () => {
     // Runs user input as parameters in the API, then filters the data through app.populateArrays()
     // ===============
       runGame: (index) => {
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
           app.populateArrays(data);
           app.shortenSummary();
           app.printDOM();
@@ -195,7 +199,7 @@ $( () => {
   // Picks a random index num based on the length of the data's book array, then runs it through app.runGame()
   // ===============
     prepareGame: () => {
-      $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
+      $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${key}`, (data) => {
         let minIndex = data.totalItems - 40;
         let randomIndex = Math.floor(Math.random() * minIndex);
         app.runGame(randomIndex)})
