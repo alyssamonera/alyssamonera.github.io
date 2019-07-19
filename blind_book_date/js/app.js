@@ -11,32 +11,28 @@ $( () => {
 
   const userLibrary = {
     bookArray: [],
-    summaryArray: [],
-    titleArray: [],
-    coverArray: [],
-    authorArray: [],
     datesArray: [],
     currentIndex: 0,
     likedBooks: 0,
     addNewDate: () => {
-      let index = userLibrary.currentIndex;
-      let newDate = {
-        title: userLibrary.titleArray[index],
-        author: userLibrary.authorArray[index],
-        summary: userLibrary.summaryArray[index],
-        cover: userLibrary.coverArray[index],
-        profileInfo: `
-                <div class=cover-container>
-                  <img src="${userLibrary.coverArray[index]}">
-                </div>
-                <div class=details-container>
-                  <ul>
-                    <li><b>title:</b> ${userLibrary.titleArray[index]}</li>
-                    <li><b>author:</b> ${userLibrary.authorArray[index]}</li>
-                    <li><b>summary:</b> ${userLibrary.summaryArray[index]}</li>
-                  </ul>
-                </div>`
-      };
+      let i = userLibrary.currentIndex;
+      let newDate = userLibrary.bookArray[i];
+      let cover = newDate.cover;
+      let title = newDate.title;
+      let author = newDate.author;
+      let summary = newDate.summary;
+      newDate.profileInfo = `
+        <div class=cover-container>
+          <img src="${cover}">
+        </div>
+        <div class=details-container>
+          <ul>
+            <li><b>title:</b> ${title}</li>
+            <li><b>author:</b> ${author}</li>
+            <li><b>summary:</b> ${summary}</li>
+          </ul>
+        </div>`;
+
       userLibrary.datesArray.push(newDate);
     }
   }
@@ -48,7 +44,7 @@ $( () => {
     // ===============
     // runGame(index)
     // Runs inside of eventHandlers.prepareGame()
-    // Runs user input as parameters in the API, then filters the data through app.populateArrays()
+    // Runs user input as parameters in the API, then filters the data through app.populateArrays(). Resets relevant values.
     // ===============
       runGame: (index) => {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${userInput.key}`, (data) => {
@@ -64,19 +60,21 @@ $( () => {
     // Stores the summaries, titles, authors, and cover image URLs into appropriate arrays
     // ===============
     populateArrays: (data) => {
-      userLibrary.bookArray = data.items;
-      for (let i = 0; i < userLibrary.bookArray.length; i++){
-        let bookInfo = userLibrary.bookArray[i].volumeInfo;
+      for (let i = 0; i < data.items.length; i++){
+        let bookInfo = data.items[i].volumeInfo;
         if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
           if (bookInfo.description.length > 200){
             let author = bookInfo.authors[0];
             let summary = bookInfo.description;
             let title = bookInfo.title;
             let cover = bookInfo.imageLinks.thumbnail;
-            userLibrary.summaryArray.push(summary);
-            userLibrary.titleArray.push(title);
-            userLibrary.coverArray.push(cover);
-            userLibrary.authorArray.push(author);
+            let newBook = {
+              author: author,
+              summary: summary,
+              title: title,
+              cover: cover
+            }
+            userLibrary.bookArray.push(newBook);
           }
         }
       }
@@ -88,13 +86,13 @@ $( () => {
   // Gives extra text a hidden class so it can be hidden on mobile
   // ===============
     shortenSummary: () => {
-      for (let i = 0; i < userLibrary.summaryArray.length; i++){
-        let summary = userLibrary.summaryArray[i];
+      for (let i = 0; i < userLibrary.bookArray.length; i++){
+        let summary = userLibrary.bookArray[i].summary;
         if (summary.length > 400){
           let shortSummary = `
-          ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span>
-          <button class="expand-button hidden">Read less</button>`;
-          userLibrary.summaryArray[i] = shortSummary;
+          ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span><button class="expand-button hidden">Show less</button>`;
+          console.log(shortSummary);
+          userLibrary.bookArray[i].summary = shortSummary;
         }
       }
     },
@@ -106,6 +104,7 @@ $( () => {
   // ===============
     printDOM: () => {
       $('main').empty();
+      let summary = userLibrary.bookArray[0].summary;
       let innerhtml =
         `<div class=tinder-container>
           <div class=swipe-container>
@@ -113,7 +112,7 @@ $( () => {
             <p>Swipe Left</p>
           </div>
           <div id=book-container>
-            <p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>
+            <p>${summary}</p>
           </div>
           <div class=swipe-container>
             <button id="swipe-right">›</button>
@@ -131,15 +130,17 @@ $( () => {
     // Updates the book-container div with a new summary
     // ===============
     updateDOM: () => {
+      let i = userLibrary.currentIndex;
+      let summary = userLibrary.bookArray[i].summary;
       $('#book-container').empty();
-      $('#book-container').append(`<p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>`);
+      $('#book-container').append(`<p>${summary}</p>`);
       $('.expand-button').on('click', eventHandlers.toggleReadMore);
     },
 
     // ===============
     // returnDates()
     // Runs upon swipe left or right when the user has found the desired amt of matches, or they run out of books
-    // Prints all the user's matches to the DOM
+    // Sets up the results container and displays the first match
     // ===============
     returnDates: () => {
       $('main').empty();
@@ -161,13 +162,33 @@ $( () => {
       }
       $('main').append(result);
       $('.expand-button').on('click', eventHandlers.toggleReadMore);
-      $('#prev').on('click', eventHandlers.browseDatesLeft);
-      $('#next').on('click', eventHandlers.browseDatesRight);
+      $('#prev').on('click', eventHandlers.browseUp);
+      $('#next').on('click', eventHandlers.browseDown);
     },
 
+    // ===============
+    // updateDates()
+    // Runs upon #prev or #next button click
+    // Displays the previous/next match
+    // ===============
     updateDates: () => {
       $('.result').empty();
       $('.result').append(userLibrary.datesArray[userLibrary.currentIndex].profileInfo);
+      $('.expand-button').on('click', eventHandlers.toggleReadMore);
+    },
+
+    // ===============
+    // reset()
+    // Runs upon clicking the home menu item
+    // Resets all relevant values
+    // ===============
+    reset: () => {
+      userLibrary.currentIndex = 0;
+      userLibrary.likedBooks = 0;
+      userLibrary.datesArray = [];
+      userLibrary.bookArray = [];
+      userInput.genre = "Fiction";
+      userInput.bookAmt = 5;
     }
   };
 
@@ -198,7 +219,7 @@ $( () => {
 
   // ===============
   // prepareGame()
-  // Runs upon click of "go" button
+  // Runs upon click of "submit" button in the modal
   // Picks a random index num based on the length of the data's book array, then runs it through app.runGame()
   // ===============
     prepareGame: () => {
@@ -206,6 +227,7 @@ $( () => {
         eventHandlers.toggleModal()
       }
       else {
+        app.reset();
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
           let minIndex = data.totalItems - 40;
           let randomIndex = Math.floor(Math.random() * minIndex);
@@ -220,7 +242,7 @@ $( () => {
   // ===============
     leftSwipe: () => {
       let index = userLibrary.currentIndex;
-      if (!userLibrary.summaryArray[index] || !userLibrary.summaryArray[index+1]){
+      if (!userLibrary.bookArray[index] || !userLibrary.bookArray[index+1]){
         app.returnDates();
       } else {
         userLibrary.currentIndex++;
@@ -238,7 +260,7 @@ $( () => {
       userLibrary.likedBooks++;
       userLibrary.currentIndex++;
       let index = userLibrary.currentIndex;
-      if (userLibrary.likedBooks >= userInput.bookAmt || !userLibrary.summaryArray[index]){
+      if (userLibrary.likedBooks >= userInput.bookAmt || !userLibrary.bookArray[index]){
         app.returnDates();
       } else {
         app.updateDOM();
@@ -260,11 +282,12 @@ $( () => {
   // Displays/hides extra text in a summary
   // ===============
     toggleReadMore: () => {
-      $(event.currentTarget).toggleClass('hidden');
-      $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
-    },
+          $(event.currentTarget).toggleClass('hidden');
+          $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
+        },
 
-    browseDatesLeft: () => {
+
+    browseUp: () => {
       userLibrary.currentIndex--;
       if (userLibrary.currentIndex < 0){
         userLibrary.currentIndex = userLibrary.datesArray.length - 1;
@@ -273,7 +296,7 @@ $( () => {
       app.updateDates();
     },
 
-    browseDatesRight: () => {
+    browseDown: () => {
       userLibrary.currentIndex++;
       if (userLibrary.currentIndex > userLibrary.datesArray.length-1){
         userLibrary.currentIndex = 0;
@@ -287,7 +310,8 @@ $( () => {
   // =========================================================
   $('#bookAmt, #genre').change(eventHandlers.updateVal);
   $('#modal-textbox button').on('click', eventHandlers.updateVal);
-  $('.go-div button').on('click', eventHandlers.prepareGame);
+  $('.go-div button').on('click', eventHandlers.toggleModal);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
+  $('#home').on('click', eventHandlers.reset)
 
 });
