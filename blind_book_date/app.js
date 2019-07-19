@@ -41,6 +41,7 @@ $( () => {
       runGame: (index) => {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=AIzaSyCd0ecTLD6dtmD-DfQCX3bd_dtn-siboXc`, (data) => {
           app.populateArrays(data);
+          app.shortenSummary();
           app.printDOM();
         })
       },
@@ -70,6 +71,25 @@ $( () => {
     },
 
   // ===============
+  // shortenSummary()
+  // Runs inside of this.runGame()
+  // Gives extra text a read-more class so it can be hidden on mobile
+  // ===============
+    shortenSummary: () => {
+      for (let i = 0; i < userLibrary.summaryArray.length; i++){
+        let summary = userLibrary.summaryArray[i];
+        if (summary.length > 400){
+          let shortSummary = `
+          ${summary.slice(0, 400)}<span>...</span>
+          <button class=expand-button>Read more</button>
+          <span class=read-more>${summary.slice(400)} </span>
+          <button class="expand-button read-more">Read less</button>`;
+          userLibrary.summaryArray[i] = shortSummary;
+        }
+      }
+    },
+
+  // ===============
   // printDOM()
   // Runs inside of this.runGame()
   // Prints the first summary and necessary buttons the first time. See updateDOM() for more.
@@ -79,19 +99,22 @@ $( () => {
       let innerhtml =
         `<div class=tinder-container>
           <div class=swipe-container>
-            <button id="swipe-left"></button>
+            <button id="swipe-left">‹</button>
             <p>Swipe Left</p>
           </div>
           <div id=book-container>
             <p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>
           </div>
           <div class=swipe-container>
-            <button id="swipe-right"></button>
+            <button id="swipe-right">›</button>
             <p>Swipe Right</p>
           </div>`;
       $('main').append(innerhtml);
       $('#swipe-left').on('click', eventHandlers.leftSwipe);
-      $('#swipe-right').on('click', eventHandlers.rightSwipe)
+      $('#swipe-right').on('click', eventHandlers.rightSwipe);
+      $('.expand-button').on('click', () => {
+        $('span, .expand-button').toggleClass('read-more');
+      });
     },
 
     // ===============
@@ -102,6 +125,9 @@ $( () => {
     updateDOM: () => {
       $('#book-container').empty();
       $('#book-container').append(`<p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>`);
+      $('.expand-button').on('click', () => {
+        $('span, .expand-button').toggleClass('read-more');
+      });
     },
 
     // ===============
