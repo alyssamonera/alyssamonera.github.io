@@ -1,15 +1,12 @@
 $( () => {
-  // =========================================================
-  //                   GLOBAL VARIABLES
-  // =========================================================
-  var key = config.book_key;
 
   // =========================================================
   //                   USER INPUT OBJECT
   // =========================================================
   const userInput = {
     genre: $('#genre').children('option:selected').val(),
-    bookAmt: 5
+    bookAmt: 5,
+    key: config.book_key
   };
 
   const userLibrary = {
@@ -43,7 +40,7 @@ $( () => {
     // Runs user input as parameters in the API, then filters the data through app.populateArrays()
     // ===============
       runGame: (index) => {
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${userInput.key}`, (data) => {
           app.populateArrays(data);
           app.shortenSummary();
           app.printDOM();
@@ -77,7 +74,7 @@ $( () => {
   // ===============
   // shortenSummary()
   // Runs inside of this.runGame()
-  // Gives extra text a read-more class so it can be hidden on mobile
+  // Gives extra text a hidden class so it can be hidden on mobile
   // ===============
     shortenSummary: () => {
       for (let i = 0; i < userLibrary.summaryArray.length; i++){
@@ -86,8 +83,8 @@ $( () => {
           let shortSummary = `
           ${summary.slice(0, 400)}<span>...</span>
           <button class=expand-button>Read more</button>
-          <span class=read-more>${summary.slice(400)} </span>
-          <button class="expand-button read-more">Read less</button>`;
+          <span class=hidden>${summary.slice(400)} </span>
+          <button class="expand-button hidden">Read less</button>`;
           userLibrary.summaryArray[i] = shortSummary;
         }
       }
@@ -117,7 +114,7 @@ $( () => {
       $('#swipe-left').on('click', eventHandlers.leftSwipe);
       $('#swipe-right').on('click', eventHandlers.rightSwipe);
       $('.expand-button').on('click', () => {
-        $('span, .expand-button').toggleClass('read-more');
+        $('span, .expand-button').toggleClass('hidden');
       });
     },
 
@@ -130,7 +127,7 @@ $( () => {
       $('#book-container').empty();
       $('#book-container').append(`<p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>`);
       $('.expand-button').on('click', () => {
-        $('span, .expand-button').toggleClass('read-more');
+        $('span, .expand-button').toggleClass('hidden');
       });
     },
 
@@ -199,11 +196,14 @@ $( () => {
   // Picks a random index num based on the length of the data's book array, then runs it through app.runGame()
   // ===============
     prepareGame: () => {
-      $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${key}`, (data) => {
-        let minIndex = data.totalItems - 40;
-        let randomIndex = Math.floor(Math.random() * minIndex);
-        app.runGame(randomIndex)})
-    },
+      if (!userInput.key){eventHandlers.toggleModal()}
+      else {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
+          let minIndex = data.totalItems - 40;
+          let randomIndex = Math.floor(Math.random() * minIndex);
+          app.runGame(randomIndex)})
+        }
+      },
 
   // ===============
   // leftSwipe()
@@ -235,15 +235,23 @@ $( () => {
       } else {
         app.updateDOM();
       }
-    }
+    },
 
+  // ===============
+  // toggleModal()
+  // Runs on API nav link click OR on the go button
+  // Displays/hides a modal prompting the user to enter an API key
+  // ===============
+    toggleModal: () => {
+      $('#modal').toggleClass("hidden");
+    }
   };
 
   // =========================================================
   //                    EVENT LISTENERS
   // =========================================================
-  $('#bookAmt').change(eventHandlers.updateVal);
-  $('#genre').change(eventHandlers.updateVal);
+  $('#bookAmt, #genre, #key').change(eventHandlers.updateVal);
   $('.go-div button').on('click', eventHandlers.prepareGame);
+  $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
 
 });

@@ -131,3 +131,54 @@ input[type=number]{
 .go-div button:hover{
   background-color: rgb(50,150,50);
 }
+
+/* MODAL */
+
+.hidden{
+  display: none;
+}
+
+#modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#modal-textbox{
+  background-color: rgb(200,161,120);
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+  padding: 1em;
+  margin: 15em auto;
+}
+
+#modal h3{
+  margin-bottom: 0;
+}
+
+#modal p{
+  margin-top: 0;
+}
+
+#modal input[type=text]{
+  font-size: 1.5em;
+}
+
+#modal button{
+  font-size: 1.5em;
+  border-radius: 0.5em;
+  transition: 1s;
+}
+
+#modal button:hover{
+  background-color: rgb(200,200,200);
+}
+
+#exit{
+  text-align: left;
+}

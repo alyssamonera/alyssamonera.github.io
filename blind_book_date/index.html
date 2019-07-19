@@ -19,7 +19,7 @@
         ///////////-->
         <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <!-- ENCRYPTION -->
+        <!-- MY API KEY -->
     <script src="js/config.js"></script>
         <!-- MY SCRIPT -->
     <script src="js/app.js"></script>
@@ -40,8 +40,8 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="#">About</a></li>
+          <li id="menu-api"><a href="#">API</a></li>
           <li><a href="#">GitHub</a></li>
-          <li><a href="#">API</a></li>
         </ul>
       </nav>
       <div class="header-text">
@@ -81,6 +81,22 @@
       </div>
 
     </main>
+
+    <!-- ///////////
+        API KEY MODAL
+        /////////////-->
+
+    <div class="hidden" id="modal">
+      <div id="modal-textbox">
+        <div id="exit"><a href="#">X</a></div>
+        <h3>Please enter your API key.</h3>
+        <p><a href="#">Learn more</a></p>
+        <form>
+          <input type="text" placeholder="API key" id="key">
+          <button>Submit</button>
+        </form>
+      </div>
+    </div>
 
     </div>
   </body>
