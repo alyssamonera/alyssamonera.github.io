@@ -25,7 +25,7 @@ $( () => {
         author: userLibrary.authorArray[index],
         summary: userLibrary.summaryArray[index],
         cover: userLibrary.coverArray[index],
-        profileInfo: `<div class=result>
+        profileInfo: `
                 <div class=cover-container>
                   <img src="${userLibrary.coverArray[index]}">
                 </div>
@@ -35,8 +35,7 @@ $( () => {
                     <li><b>author:</b> ${userLibrary.authorArray[index]}</li>
                     <li><b>summary:</b> ${userLibrary.summaryArray[index]}</li>
                   </ul>
-                </div>
-              </div>`
+                </div>`
       };
       userLibrary.datesArray.push(newDate);
     }
@@ -148,7 +147,10 @@ $( () => {
       let currentDate = userLibrary.datesArray[0];
       let result = `
       <div class="results-container">
-      <button id="prev">▲</button> ${userLibrary.datesArray[0].profileInfo}
+      <button id="prev">▲</button>
+        <div class=result>
+          ${userLibrary.datesArray[0].profileInfo}
+        </div>
       <button id="next">▼</button></div>`;
       if (userLibrary.datesArray.length < userInput.bookAmt){
         let apology =
@@ -159,6 +161,13 @@ $( () => {
       }
       $('main').append(result);
       $('.expand-button').on('click', eventHandlers.toggleReadMore);
+      $('#prev').on('click', eventHandlers.browseDatesLeft);
+      $('#next').on('click', eventHandlers.browseDatesRight);
+    },
+
+    updateDates: () => {
+      $('.result').empty();
+      $('.result').append(userLibrary.datesArray[userLibrary.currentIndex].profileInfo);
     }
   };
 
@@ -181,6 +190,7 @@ $( () => {
         eventHandlers.toggleModal();
         $id = "key";
         userInput[$id] = $("#key").val();
+        eventHandlers.prepareGame();
       } else {
         userInput[$id] = $(event.currentTarget).val();
       }
@@ -252,6 +262,23 @@ $( () => {
     toggleReadMore: () => {
       $(event.currentTarget).toggleClass('hidden');
       $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
+    },
+
+    browseDatesLeft: () => {
+      userLibrary.currentIndex--;
+      if (userLibrary.currentIndex < 0){
+        userLibrary.currentIndex = userLibrary.datesArray.length - 1;
+      }
+      console.log(userLibrary.currentIndex);
+      app.updateDates();
+    },
+
+    browseDatesRight: () => {
+      userLibrary.currentIndex++;
+      if (userLibrary.currentIndex > userLibrary.datesArray.length-1){
+        userLibrary.currentIndex = 0;
+      }
+      app.updateDates();
     }
   };
 
