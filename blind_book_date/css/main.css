@@ -28,7 +28,7 @@ button:hover{
 
 /* NAVIGATION */
 
-ul {
+nav ul {
   display: flex;
   justify-content: space-around;
   margin: 1em 0;
@@ -38,7 +38,7 @@ ul {
   list-style-type: none;
 }
 
-li{
+nav li{
   display: inline-block;
   font-size: 1.5em;
   font-family: 'Roboto Slab', serif;

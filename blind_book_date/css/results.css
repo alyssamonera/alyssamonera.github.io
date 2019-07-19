@@ -1,0 +1,27 @@
+.result{
+  display: flex;
+  justify-content: space-around;
+  border: 1px dashed rgb(200,200,100);
+  padding: 1em 0.5em;
+}
+
+.cover-container{
+  display: flex;
+  align-items: center;
+}
+
+.cover-container img{
+  height: 400px;
+  width: 250px;
+}
+
+.details-container ul{
+  list-style-type: none;
+  font-size: 1.5em;
+  font-family: "Times New Roman";
+  line-height: 1.5;
+}
+
+.details-container b{
+  color: green;
+}

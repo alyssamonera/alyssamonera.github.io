@@ -81,9 +81,7 @@ $( () => {
         let summary = userLibrary.summaryArray[i];
         if (summary.length > 400){
           let shortSummary = `
-          ${summary.slice(0, 400)}<span>...</span>
-          <button class=expand-button>Read more</button>
-          <span class=hidden>${summary.slice(400)} </span>
+          ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span>
           <button class="expand-button hidden">Read less</button>`;
           userLibrary.summaryArray[i] = shortSummary;
         }
@@ -151,9 +149,9 @@ $( () => {
           </div>
           <div class=details-container>
             <ul>
-              <li>title: ${title}</li>
-              <li>author: ${author}</li>
-              <li>summary: ${summary}</li>
+              <li><b>title:</b> ${title}</li>
+              <li><b>author:</b> ${author}</li>
+              <li><b>summary:</b> ${summary}</li>
             </ul>
           </div>
         </div>`;
@@ -167,6 +165,9 @@ $( () => {
         $resultsContainer.prepend(apology);
       }
       $('main').append($resultsContainer);
+      $('.expand-button').on('click', () => {
+        $('span, .expand-button').toggleClass('hidden');
+      });
     }
   };
 
@@ -206,6 +207,7 @@ $( () => {
       }
       else {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
+          console.log(data);
           let minIndex = data.totalItems - 40;
           let randomIndex = Math.floor(Math.random() * minIndex);
           app.runGame(randomIndex)})
