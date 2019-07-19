@@ -3,12 +3,21 @@ $( () => {
   // =========================================================
   //                   USER INPUT OBJECT
   // =========================================================
+
+  // ====================
+  // userInput (object)
+  // Stores input from the select, number, and text inputs
+  // ====================
   const userInput = {
     genre: $('#genre').children('option:selected').val(),
     bookAmt: 5,
     key: undefined,
   };
 
+  // ====================
+  // userLibrary (object)
+  // Tracks/stores the user's selected books + book data from the API
+  // ====================
   const userLibrary = {
     bookArray: [],
     datesArray: [],
@@ -91,7 +100,6 @@ $( () => {
         if (summary.length > 400){
           let shortSummary = `
           ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span><button class="expand-button hidden">Show less</button>`;
-          console.log(shortSummary);
           userLibrary.bookArray[i].summary = shortSummary;
         }
       }
@@ -103,6 +111,7 @@ $( () => {
   // Prints the first summary and necessary buttons the first time
   // ===============
     printDOM: () => {
+      console.log(userInput);
       $('main').empty();
       let summary = userLibrary.bookArray[0].summary;
       let innerhtml =
@@ -187,8 +196,6 @@ $( () => {
       userLibrary.likedBooks = 0;
       userLibrary.datesArray = [];
       userLibrary.bookArray = [];
-      userInput.genre = "Fiction";
-      userInput.bookAmt = 5;
     }
   };
 
@@ -286,16 +293,24 @@ $( () => {
           $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
         },
 
-
+  // ===============
+  // browseUp()
+  // Runs on "prev" button click
+  // Displays the previous book match
+  // ===============
     browseUp: () => {
       userLibrary.currentIndex--;
       if (userLibrary.currentIndex < 0){
         userLibrary.currentIndex = userLibrary.datesArray.length - 1;
       }
-      console.log(userLibrary.currentIndex);
       app.updateDates();
     },
 
+  // ===============
+  // browseDown()
+  // Runs on "next" button click
+  // Displays the next book match
+  // ===============
     browseDown: () => {
       userLibrary.currentIndex++;
       if (userLibrary.currentIndex > userLibrary.datesArray.length-1){
