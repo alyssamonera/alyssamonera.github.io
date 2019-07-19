@@ -24,7 +24,19 @@ $( () => {
         title: userLibrary.titleArray[index],
         author: userLibrary.authorArray[index],
         summary: userLibrary.summaryArray[index],
-        cover: userLibrary.coverArray[index]
+        cover: userLibrary.coverArray[index],
+        profileInfo: `<div class=result>
+                <div class=cover-container>
+                  <img src="${userLibrary.coverArray[index]}">
+                </div>
+                <div class=details-container>
+                  <ul>
+                    <li><b>title:</b> ${userLibrary.titleArray[index]}</li>
+                    <li><b>author:</b> ${userLibrary.authorArray[index]}</li>
+                    <li><b>summary:</b> ${userLibrary.summaryArray[index]}</li>
+                  </ul>
+                </div>
+              </div>`
       };
       userLibrary.datesArray.push(newDate);
     }
@@ -111,9 +123,7 @@ $( () => {
       $('main').append(innerhtml);
       $('#swipe-left').on('click', eventHandlers.leftSwipe);
       $('#swipe-right').on('click', eventHandlers.rightSwipe);
-      $('.expand-button').on('click', () => {
-        $('span, .expand-button').toggleClass('hidden');
-      });
+      $('.expand-button').on('click', eventHandlers.toggleReadMore);
     },
 
     // ===============
@@ -124,9 +134,7 @@ $( () => {
     updateDOM: () => {
       $('#book-container').empty();
       $('#book-container').append(`<p>${userLibrary.summaryArray[userLibrary.currentIndex]}</p>`);
-      $('.expand-button').on('click', () => {
-        $('span, .expand-button').toggleClass('hidden');
-      });
+      $('.expand-button').on('click', eventHandlers.toggleReadMore);
     },
 
     // ===============
@@ -136,39 +144,21 @@ $( () => {
     // ===============
     returnDates: () => {
       $('main').empty();
-      let $resultsContainer = $('<div>').addClass('results-container');
-      for (let i = 0; i < userLibrary.datesArray.length; i++){
-        let cover = userLibrary.datesArray[i].cover;
-        let title = userLibrary.datesArray[i].title;
-        let author = userLibrary.datesArray[i].author;
-        let summary = userLibrary.datesArray[i].summary;
-        let innerhtml =
-        `<div class=result>
-          <div class=cover-container>
-            <img src="${cover}">
-          </div>
-          <div class=details-container>
-            <ul>
-              <li><b>title:</b> ${title}</li>
-              <li><b>author:</b> ${author}</li>
-              <li><b>summary:</b> ${summary}</li>
-            </ul>
-          </div>
-        </div>`;
-        $resultsContainer.append(innerhtml);
-      }
+      userLibrary.currentIndex = 0;
+      let currentDate = userLibrary.datesArray[0];
+      let result = `
+      <div class="results-container">
+      <button id="prev">▲</button> ${userLibrary.datesArray[0].profileInfo}
+      <button id="next">▼</button></div>`;
       if (userLibrary.datesArray.length < userInput.bookAmt){
         let apology =
         `<div class=message>
           <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
         </div>`;
-        $resultsContainer.prepend(apology);
+        $('main').append(apology);
       }
-      $('main').append($resultsContainer);
-      $('.expand-button').on('click', () => {
-        $(event.currentTarget).toggleClass('hidden');
-        $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
-      });
+      $('main').append(result);
+      $('.expand-button').on('click', eventHandlers.toggleReadMore);
     }
   };
 
@@ -203,12 +193,10 @@ $( () => {
   // ===============
     prepareGame: () => {
       if (!userInput.key){
-        console.log(userInput.key);
         eventHandlers.toggleModal()
       }
       else {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
-          console.log(data);
           let minIndex = data.totalItems - 40;
           let randomIndex = Math.floor(Math.random() * minIndex);
           app.runGame(randomIndex)})
@@ -254,6 +242,16 @@ $( () => {
   // ===============
     toggleModal: () => {
       $('#modal').toggleClass("hidden");
+    },
+
+  // ===============
+  // toggleReadMore()
+  // Runs on "Read more" or "Read less" button click
+  // Displays/hides extra text in a summary
+  // ===============
+    toggleReadMore: () => {
+      $(event.currentTarget).toggleClass('hidden');
+      $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
     }
   };
 
