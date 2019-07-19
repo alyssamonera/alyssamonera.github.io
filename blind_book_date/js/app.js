@@ -166,7 +166,8 @@ $( () => {
       }
       $('main').append($resultsContainer);
       $('.expand-button').on('click', () => {
-        $('span, .expand-button').toggleClass('hidden');
+        $(event.currentTarget).toggleClass('hidden');
+        $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
       });
     }
   };
