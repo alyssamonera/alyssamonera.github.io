@@ -31,8 +31,8 @@ button:hover{
 nav ul {
   display: flex;
   justify-content: space-around;
-  margin: 1em 0;
-  padding: 1em;
+  margin: 0;
+  padding: 2em 1em;
   width: 100%;
   background-color: rgb(200,161,120);
   list-style-type: none;
@@ -55,7 +55,9 @@ nav li{
 
 .header-text h1{
   font-size: 5em;
-  margin-bottom: 0;
+  margin: 0 auto;
+  margin-top: 0.5em;
+  text-transform: lowercase;
 }
 
 .header-text h2{
