@@ -1,52 +1,6 @@
 $( () => {
 
   // =========================================================
-  //                   USER INPUT OBJECT
-  // =========================================================
-
-  // ====================
-  // userInput (object)
-  // Stores input from the select, number, and text inputs
-  // ====================
-  const userInput = {
-    genre: $('#genre').children('option:selected').val(),
-    bookAmt: 5,
-    key: undefined,
-  };
-
-  // ====================
-  // userLibrary (object)
-  // Tracks/stores the user's selected books + book data from the API
-  // ====================
-  const userLibrary = {
-    bookArray: [],
-    datesArray: [],
-    currentIndex: 0,
-    likedBooks: 0,
-    addNewDate: () => {
-      let i = userLibrary.currentIndex;
-      let newDate = userLibrary.bookArray[i];
-      let cover = newDate.cover;
-      let title = newDate.title;
-      let author = newDate.author;
-      let summary = newDate.summary;
-      newDate.profileInfo = `
-        <div class=cover-container>
-          <img src="${cover}">
-        </div>
-        <div class=details-container>
-          <ul>
-            <li><b>title:</b> ${title}</li>
-            <li><b>author:</b> ${author}</li>
-            <li><b>summary:</b> ${summary}</li>
-          </ul>
-        </div>`;
-
-      userLibrary.datesArray.push(newDate);
-    }
-  }
-
-  // =========================================================
   //                       APP LOGIC
   // =========================================================
   const app = {
@@ -184,18 +138,6 @@ $( () => {
       $('.result').empty();
       $('.result').append(userLibrary.datesArray[userLibrary.currentIndex].profileInfo);
       $('.expand-button').on('click', eventHandlers.toggleReadMore);
-    },
-
-    // ===============
-    // reset()
-    // Runs upon clicking the home menu item
-    // Resets all relevant values
-    // ===============
-    reset: () => {
-      userLibrary.currentIndex = 0;
-      userLibrary.likedBooks = 0;
-      userLibrary.datesArray = [];
-      userLibrary.bookArray = [];
     }
   };
 
@@ -317,6 +259,18 @@ $( () => {
         userLibrary.currentIndex = 0;
       }
       app.updateDates();
+    },
+
+  // ===============
+  // reset()
+  // Runs upon clicking the home menu item
+  // Resets all relevant values
+  // ===============
+    reset: () => {
+      userLibrary.currentIndex = 0;
+      userLibrary.likedBooks = 0;
+      userLibrary.datesArray = [];
+      userLibrary.bookArray = [];
     }
   };
 
