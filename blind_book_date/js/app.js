@@ -185,6 +185,10 @@ $( () => {
       let $id = $(event.currentTarget).attr('id');
       if ($id === "bookAmt"){
         userInput[$id] = parseInt($(event.currentTarget).val())
+      } else if ($id === "api-submit"){
+        eventHandlers.toggleModal();
+        $id = "key";
+        userInput[$id] = $("#key").val();
       } else {
         userInput[$id] = $(event.currentTarget).val();
       }
@@ -196,7 +200,10 @@ $( () => {
   // Picks a random index num based on the length of the data's book array, then runs it through app.runGame()
   // ===============
     prepareGame: () => {
-      if (!userInput.key){eventHandlers.toggleModal()}
+      if (!userInput.key){
+        console.log(userInput.key);
+        eventHandlers.toggleModal()
+      }
       else {
         $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${userInput.genre}&langRestrict=en&key=${userInput.key}`, (data) => {
           let minIndex = data.totalItems - 40;
@@ -250,7 +257,8 @@ $( () => {
   // =========================================================
   //                    EVENT LISTENERS
   // =========================================================
-  $('#bookAmt, #genre, #key').change(eventHandlers.updateVal);
+  $('#bookAmt, #genre').change(eventHandlers.updateVal);
+  $('#modal-textbox button').on('click', eventHandlers.updateVal);
   $('.go-div button').on('click', eventHandlers.prepareGame);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
 
