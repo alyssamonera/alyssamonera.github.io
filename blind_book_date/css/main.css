@@ -122,7 +122,6 @@ input[type=number]{
 .go-div button{
   font-size: 3em;
   padding: 1em;
-  border-radius: 1em;
   background-color: rgb(50,100,50);
   color: white;
   font-family: 'Roboto Slab', serif;
@@ -132,6 +131,7 @@ input[type=number]{
 
 .go-div button:hover{
   background-color: rgb(50,150,50);
+  border-radius: 1em;
 }
 
 /* MODAL */
@@ -183,4 +183,27 @@ input[type=number]{
 
 #exit{
   text-align: left;
+}
+
+/* ========================BREAK================================ */
+@media (min-width: 700px){
+
+  .options-div{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .genre-form, .number-form{
+    margin: 0 auto;
+  }
+
+  select, input[type=number]{
+    font-size: 2em;
+  }
+
+  .go-div button{
+    font-size: 2em;
+    width: 8em;
+  }
+
 }
