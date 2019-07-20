@@ -23,7 +23,6 @@ const app = {
   // Runs user input as parameters in the API, then filters the data through app.populateArrays().
   // ===============
   runGame: (index) => {
-    globalFunc.reset();
     let genre = localStorage.getItem("genre");
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
@@ -87,7 +86,7 @@ const app = {
     $('#book-container').append(`<p>${summary}</p>`);
     $('.expand-button').on('click', eventHandlers.toggleReadMore);
   }
-  
+
 };
 
 // =========================================================

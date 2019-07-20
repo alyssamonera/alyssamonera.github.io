@@ -19,6 +19,7 @@ const eventHandlers = {
       globalFunc.goToPage("app");
     } else {
       localStorage.setItem($id, $(event.currentTarget).val())
+      console.log(localStorage.getItem($id));
     }
   },
 
