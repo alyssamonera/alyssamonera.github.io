@@ -29,6 +29,9 @@ const app = {
       app.populateArrays(data);
       app.shortenSummary();
       app.updateDOM();
+    }, () => {
+      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
+      $('#book-container').append(errorMessage);
     })
   },
 
