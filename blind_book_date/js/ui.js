@@ -12,8 +12,6 @@ const userInput = {
   key: undefined,
 };
 
-
-
 // ====================
 // userLibrary (object)
 // Tracks/stores the user's selected books + book data from the API
