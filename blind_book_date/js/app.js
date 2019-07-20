@@ -29,9 +29,6 @@ const app = {
       app.populateArrays(data);
       app.shortenSummary();
       app.updateDOM();
-    }, () => {
-      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
-      $('#book-container').append(errorMessage);
     })
   },
 
@@ -41,10 +38,14 @@ const app = {
   // Stores books as objects in the library bookArray property
   // ===============
   populateArrays: (data) => {
-    for (let i = 0; i < data.items.length; i++){
-      let bookInfo = data.items[i].volumeInfo;
-      if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
-        if (bookInfo.description.length > 200){
+    if (data.items === undefined){
+      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
+      $('#book-container').append(errorMessage);
+    } else {
+      for (let i = 0; i < data.items.length; i++){
+        let bookInfo = data.items[i].volumeInfo;
+        let isbn = app.checkBook(bookInfo);
+        if (isbn);
           let author = bookInfo.authors[0];
           let summary = bookInfo.description;
           let title = bookInfo.title;
@@ -53,12 +54,30 @@ const app = {
             author: author,
             summary: summary,
             title: title,
-            cover: cover
+            cover: cover,
+            isbn: isbn
+            }
+            library.bookArray.push(newBook);
           }
-          library.bookArray.push(newBook);
+        }
+      console.log(library.bookArray);
+    },
+
+  // ===============
+  // checkBook(bookInfo)
+  // Runs inside of app.populateArrays(data)
+  // Checks if the book object has all the required properties and, if so, returns the ISBN. Otherwise returns false.
+  // ===============
+  checkBook: (bookInfo) => {
+    if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
+      if (bookInfo.description.length > 200){
+        for (let value of bookInfo.industryIdentifiers){
+          if (value.type === "ISBN_13"){
+            return value.identifier;
+          }
         }
       }
-    }
+    } else {return false}
   },
 
 // ===============

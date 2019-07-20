@@ -14,7 +14,7 @@ const storage = {
       for (let book of storage.storedBooks){
         let $container = $('<div>').addClass('match-container');
         let $button = $('<button>').addClass('remove-match').text("▲ Remove Match ▲");
-        $button.attr("id", book.title)
+        $button.attr("isbn", book.isbn)
         $container.append(book.profileInfo, $button);
         $('#storage-container').append($container);
       }
@@ -28,9 +28,10 @@ const storage = {
   // Removes book from storage page and local storage memory
   // ===================
   removeMatch: () => {
-    let $title = $(event.currentTarget).attr("id");
+    console.log(storage.storedBooks);
+    let $isbn = $(event.currentTarget).attr("isbn");
     for (let book of storage.storedBooks){
-      if (book.title === $title){
+      if (book.isbn === $isbn){
         let index = storage.storedBooks.indexOf(book);
         storage.storedBooks.splice(index, 1);
         localStorage.setItem("books", JSON.stringify(storage.storedBooks));
