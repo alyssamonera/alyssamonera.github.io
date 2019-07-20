@@ -85,6 +85,7 @@ const app = {
     let summary = library.bookArray[i].summary;
     $('#book-container').empty();
     $('#book-container').append(`<p>${summary}</p>`);
+    $('.expand-button').on('click', eventHandlers.toggleReadMore);
   },
 };
 
@@ -95,7 +96,5 @@ $( () => {
 
   $('#left-container').on('click', eventHandlers.leftSwipe);
   $('#right-container').on('click', eventHandlers.rightSwipe);
-  $('.expand-button').on('click', eventHandlers.toggleReadMore);
-
   app.randomizeIndex();
 })

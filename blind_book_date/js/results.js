@@ -14,13 +14,16 @@ const bookStorage = {
   returnResults: () => {
     let currentBook = bookStorage.storedBooks[0];
     $('#result').append(currentBook.profileInfo);
-    // if (storedBooks.length < userInput.bookAmt){
-    //   let apology =
-    //   `<div class=message>
-    //     <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
-    //   </div>`;
-    //   $('main').prepend(apology);
-    // }
+    $('.expand-button').on('click', eventHandlers.toggleReadMore);
+
+    let bookAmt = localStorage.getItem("bookAmt")
+    if (bookStorage.storedBooks.length < bookAmt){
+      let apology =
+      `<div class=message>
+        <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
+      </div>`;
+      $('main').prepend(apology);
+    }
   },
 
   // ===============
@@ -67,9 +70,9 @@ const bookStorage = {
 // =========================================================
 $( () => {
 
-  $('.expand-button').on('click', eventHandlers.toggleReadMore);
   $('#prev').on('click', bookStorage.browseUp);
   $('#next').on('click', bookStorage.browseDown);
   bookStorage.returnResults();
+  $('.expand-button').on('click', eventHandlers.toggleReadMore);
 
 });

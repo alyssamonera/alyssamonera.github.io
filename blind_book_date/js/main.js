@@ -28,7 +28,7 @@ const eventHandlers = {
 // Checks for an API key, then goes to the next page
 // ===============
   prepareGame: () => {
-    if (!userInput.key){eventHandlers.toggleModal()}
+    if (!localStorage.getItem("key")){eventHandlers.toggleModal()}
     else {globalFunc.goToPage("app");}
   },
 
@@ -40,7 +40,7 @@ const eventHandlers = {
   leftSwipe: () => {
     let index = library.currentIndex;
     if (!library.bookArray[index] || !library.bookArray[index+1]){
-      app.goToPage("results");
+      globalFunc.goToPage("results");
     } else {
       library.currentIndex++;
       app.updateDOM();
@@ -57,8 +57,9 @@ const eventHandlers = {
     library.likedBooks++;
     library.currentIndex++;
     let index = library.currentIndex;
-    if (library.likedBooks >= userInput.bookAmt || !library.bookArray[index]){
-      app.goToPage("results");
+    let bookAmt = parseInt(localStorage.getItem("bookAmt"));
+    if (library.likedBooks >= bookAmt || !library.bookArray[index]){
+      globalFunc.goToPage("results");
     } else {
       app.updateDOM();
     }
@@ -79,9 +80,9 @@ const eventHandlers = {
 // Displays/hides extra text in a summary
 // ===============
   toggleReadMore: () => {
-        $(event.currentTarget).toggleClass('hidden');
-        $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
-      }
+    $(event.currentTarget).toggleClass('hidden');
+    $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
+  }
 
 };
 
