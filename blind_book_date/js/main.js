@@ -106,8 +106,27 @@ const globalFunc = {
     library.likedBooks = 0;
     library.datesArray = [];
     library.bookArray = [];
+  },
+
+  // ===============
+  // checkStorage()
+  // Runs on launch
+  // If storage is empty, sets initial values
+  // ===============
+  checkStorage: (item) => {
+    if (!localStorage.getItem(item)){
+      switch (item){
+        case "genre":
+          localStorage.setItem("genre", "Fiction");
+          break;
+        case "bookAmt":
+          localStorage.setItem("bookAmt", 5);
+          break;
+      }
+    }
   }
-}
+
+};
 
 // =========================================================
 //                    EVENT LISTENERS
@@ -120,6 +139,7 @@ $( () => {
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
   $('#home').on('click', eventHandlers.reset);
 
-  library.getSavedBooks();
+  globalFunc.checkStorage("genre");
+  globalFunc.checkStorage("bookAmt");
 
 });

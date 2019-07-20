@@ -92,7 +92,10 @@ const app = {
 //                    EVENT LISTENERS
 // =========================================================
 $( () => {
+
   $('#left-container').on('click', eventHandlers.leftSwipe);
   $('#right-container').on('click', eventHandlers.rightSwipe);
   $('.expand-button').on('click', eventHandlers.toggleReadMore);
+
+  app.randomizeIndex();
 })
