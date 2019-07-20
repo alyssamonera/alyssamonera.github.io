@@ -13,7 +13,7 @@ const storage = {
       $('#storage-container').empty();
       for (let book of storage.storedBooks){
         let $container = $('<div>').addClass('match-container');
-        let $button = $('<button>').addClass('remove-match').text("▲ Remove Match ▲");
+        let $button = $('<button>').addClass('remove-match').text("Remove Match");
         $button.attr("isbn", book.isbn)
         $container.append(book.profileInfo, $button);
         $('#storage-container').append($container);

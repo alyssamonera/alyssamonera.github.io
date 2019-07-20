@@ -1,5 +1,10 @@
 /* BOOK PROFILE */
 
+main h1{
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+}
+
 #storage-container .book-container{
   margin-bottom: 0;
 }
@@ -19,4 +24,5 @@
 
 .remove-match:hover{
   background-color: red;
+  letter-spacing: 0.4em;
 }
