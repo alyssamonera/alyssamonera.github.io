@@ -110,6 +110,8 @@ const globalFunc = {
     library.likedBooks = 0;
     library.datesArray = [];
     library.bookArray = [];
+    localStorage.setItem("genre", "Fiction");
+    localStorage.setItem("bookAmt", 5);
   },
 
   // ===============
