@@ -24,7 +24,7 @@ const library = {
     newDate.profileInfo = `
     <div class=book-container>
       <div class=cover-container>
-        <img src="${cover}">
+        <img src="${cover}" alt="${title} cover" title="${title} by ${author}">
       </div>
       <div class=details-container>
         <ul>
