@@ -39,7 +39,13 @@ const userLibrary = {
           <li><b>summary:</b> ${summary}</li>
         </ul>
       </div>`;
-
     userLibrary.datesArray.push(newDate);
+  },
+  getSavedBooks: () => {
+    if (!localStorage.getItem("savedBooks")){
+      console.log("there are no saved books yet");
+    } else {
+      console.log("there are some books saved here");
+    }
   }
 }

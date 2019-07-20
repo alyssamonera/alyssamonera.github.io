@@ -280,6 +280,8 @@ $( () => {
   $('#modal-textbox button').on('click', eventHandlers.updateVal);
   $('.go-div button').on('click', eventHandlers.toggleModal);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
-  $('#home').on('click', eventHandlers.reset)
+  $('#home').on('click', eventHandlers.reset);
 
+  userLibrary.getSavedBooks();
+  
 });
