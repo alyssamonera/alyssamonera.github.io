@@ -2,7 +2,7 @@
 //                     RESULTS APP LOGIC
 // =========================================================
 
-const bookStorage = {
+const resultsList = {
   currentIndex: 0,
   storedBooks: JSON.parse(localStorage.getItem("newBooks")),
 
@@ -12,12 +12,12 @@ const bookStorage = {
   // Displays the first match & appropriate messages
   // ===============
   returnResults: () => {
-    let currentBook = bookStorage.storedBooks[0];
+    let currentBook = resultsList.storedBooks[0];
     $('#result').append(currentBook.profileInfo);
     $('.expand-button').on('click', eventHandlers.toggleReadMore);
 
     let bookAmt = localStorage.getItem("bookAmt")
-    if (bookStorage.storedBooks.length < bookAmt){
+    if (resultsList.storedBooks.length < bookAmt){
       let apology =
       `<div class=message>
         <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
@@ -33,8 +33,9 @@ const bookStorage = {
   // ===============
   updateResults: () => {
     $('#result').empty();
-    let i = bookStorage.currentIndex;
-    $('#result').append(bookStorage.storedBooks[i].profileInfo);
+    let i = resultsList.currentIndex;
+    $('#result').append(resultsList.storedBooks[i].profileInfo);
+    $('.expand-button').on('click', eventHandlers.toggleReadMore);
   },
 
   // ===============
@@ -43,11 +44,11 @@ const bookStorage = {
   // Displays the previous book match
   // ===============
     browseUp: () => {
-      bookStorage.currentIndex--;
-      if (bookStorage.currentIndex < 0){
-        bookStorage.currentIndex = bookStorage.storedBooks.length - 1;
+      resultsList.currentIndex--;
+      if (resultsList.currentIndex < 0){
+        resultsList.currentIndex = resultsList.storedBooks.length - 1;
       }
-      bookStorage.updateResults();
+      resultsList.updateResults();
     },
 
   // ===============
@@ -56,11 +57,11 @@ const bookStorage = {
   // Displays the next book match
   // ===============
     browseDown: () => {
-      bookStorage.currentIndex++;
-      if (bookStorage.currentIndex > bookStorage.storedBooks.length-1){
-        bookStorage.currentIndex = 0;
+      resultsList.currentIndex++;
+      if (resultsList.currentIndex > resultsList.storedBooks.length-1){
+        resultsList.currentIndex = 0;
       }
-      bookStorage.updateResults();
+      resultsList.updateResults();
     },
 
 };
@@ -70,9 +71,9 @@ const bookStorage = {
 // =========================================================
 $( () => {
 
-  $('#prev').on('click', bookStorage.browseUp);
-  $('#next').on('click', bookStorage.browseDown);
-  bookStorage.returnResults();
+  $('#prev').on('click', resultsList.browseUp);
+  $('#next').on('click', resultsList.browseDown);
+  resultsList.returnResults();
   $('.expand-button').on('click', eventHandlers.toggleReadMore);
 
 });
