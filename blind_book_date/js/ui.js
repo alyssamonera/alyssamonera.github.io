@@ -26,6 +26,7 @@ const library = {
     let author = newDate.author;
     let summary = newDate.summary;
     newDate.profileInfo = `
+    <div class=book-container>
       <div class=cover-container>
         <img src="${cover}">
       </div>
@@ -35,7 +36,8 @@ const library = {
           <li><b>author:</b> ${author}</li>
           <li><b>summary:</b> ${summary}</li>
         </ul>
-      </div>`;
+      </div>
+    </div>`;
     library.datesArray.push(newDate);
     let storedBooks = JSON.parse(localStorage.getItem("books"));
     storedBooks.push(newDate);
