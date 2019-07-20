@@ -7,14 +7,19 @@ const storage = {
   // Pulls past matches from local storage and adds to page
   // ===================
   populateStorage: () => {
-    for (let book of storage.storedBooks){
-      let $container = $('<div>').addClass('match-container');
-      let $button = $('<button>').addClass('remove-match');
-      $button.attr("id", book.title)
-      $container.append(book.profileInfo, $button);
-      $('#storage-container').append($container);
+    if (storage.storedBooks.length === 0){
+      $('#storage-container').append('<p>No matches yet.</p>')
+    } else {
+      $('#storage-container').empty();
+      for (let book of storage.storedBooks){
+        let $container = $('<div>').addClass('match-container');
+        let $button = $('<button>').addClass('remove-match');
+        $button.attr("id", book.title)
+        $container.append(book.profileInfo, $button);
+        $('#storage-container').append($container);
+      }
+      $('.remove-match').on('click', storage.removeMatch);
     }
-    $('.remove-match').on('click', storage.removeMatch);
   },
 
   // ===================
