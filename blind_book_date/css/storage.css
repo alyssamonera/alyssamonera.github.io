@@ -9,6 +9,15 @@ main h1{
   margin-bottom: 0;
 }
 
+#storage-container .match-container{
+  opacity: 0.7;
+  transition: 1s;
+}
+
+#storage-container .match-container:hover{
+  opacity: 1;
+}
+
 /* REMOVE BUTTON */
 
 .remove-match{
