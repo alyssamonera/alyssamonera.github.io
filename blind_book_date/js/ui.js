@@ -3,20 +3,10 @@
 // =========================================================
 
 // ====================
-// userInput (object)
-// Stores input from the select, number, and text inputs
-// ====================
-const userInput = {
-  genre: "Fiction",
-  bookAmt: 5,
-  key: undefined,
-};
-
-// ====================
-// userLibrary (object)
+// library (object)
 // Tracks/stores the user's selected books + book data from the API
 // ====================
-const userLibrary = {
+const library = {
   bookArray: [],
   datesArray: [],
   currentIndex: 0,
@@ -29,8 +19,8 @@ const userLibrary = {
   // JSON/stringify solution found at: https://stackoverflow.com/questions/16083919/push-json-objects-to-array-in-localstorage
   // =================
   addNewDate: () => {
-    let i = userLibrary.currentIndex;
-    let newDate = userLibrary.bookArray[i];
+    let i = library.currentIndex;
+    let newDate = library.bookArray[i];
     let cover = newDate.cover;
     let title = newDate.title;
     let author = newDate.author;
@@ -46,11 +36,10 @@ const userLibrary = {
           <li><b>summary:</b> ${summary}</li>
         </ul>
       </div>`;
-    userLibrary.datesArray.push(newDate);
+    library.datesArray.push(newDate);
     let storedBooks = JSON.parse(localStorage.getItem("books"));
     storedBooks.push(newDate);
     localStorage.setItem("books", JSON.stringify(storedBooks))
-    console.log(storedBooks);
   },
 
   // =================
@@ -61,7 +50,7 @@ const userLibrary = {
   getSavedBooks: () => {
     if (localStorage.length != 0){
       let storedBooks = JSON.parse(localStorage.getItem("books"));
-      console.log(storedBooks);
+      storedBooks = [];
     } else {
       let books = [];
       localStorage.setItem("books", JSON.stringify(books));
