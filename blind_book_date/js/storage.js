@@ -28,7 +28,6 @@ const storage = {
   // Removes book from storage page and local storage memory
   // ===================
   removeMatch: () => {
-    console.log(storage.storedBooks);
     let $isbn = $(event.currentTarget).attr("isbn");
     for (let book of storage.storedBooks){
       if (book.isbn === $isbn){

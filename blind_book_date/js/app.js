@@ -60,7 +60,6 @@ const app = {
             library.bookArray.push(newBook);
           }
         }
-      console.log(library.bookArray);
     },
 
   // ===============

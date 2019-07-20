@@ -20,6 +20,7 @@ const library = {
     let title = newDate.title;
     let author = newDate.author;
     let summary = newDate.summary;
+    let isbn = newDate.isbn;
     newDate.profileInfo = `
     <div class=book-container>
       <div class=cover-container>
