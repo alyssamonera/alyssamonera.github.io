@@ -45,7 +45,7 @@ const app = {
       for (let i = 0; i < data.items.length; i++){
         let bookInfo = data.items[i].volumeInfo;
         let isbn = app.checkBook(bookInfo);
-        if (isbn);
+        if (isbn){
           let author = bookInfo.authors[0];
           let summary = bookInfo.description;
           let title = bookInfo.title;
@@ -60,6 +60,7 @@ const app = {
             library.bookArray.push(newBook);
           }
         }
+      }
     },
 
   // ===============
