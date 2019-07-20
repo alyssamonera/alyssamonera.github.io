@@ -126,6 +126,10 @@ const globalFunc = {
         case "bookAmt":
           localStorage.setItem("bookAmt", 5);
           break;
+        case "books":
+          let books = [];
+          localStorage.setItem("books", JSON.stringify(books));
+          break;
       }
     }
   }
@@ -145,5 +149,6 @@ $( () => {
 
   globalFunc.checkStorage("genre");
   globalFunc.checkStorage("bookAmt");
+  globalFunc.checkStorage("books");
 
 });

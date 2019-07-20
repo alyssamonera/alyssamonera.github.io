@@ -40,20 +40,6 @@ const library = {
     let storedBooks = JSON.parse(localStorage.getItem("books"));
     storedBooks.push(newDate);
     localStorage.setItem("books", JSON.stringify(storedBooks))
-  },
-
-  // =================
-  // getSavedBooks()
-  // Runs on launch
-  // Checks if there is anything in local storage
-  // =================
-  getSavedBooks: () => {
-    if (localStorage.length != 0){
-      let storedBooks = JSON.parse(localStorage.getItem("books"));
-    } else {
-      let books = [];
-      localStorage.setItem("books", JSON.stringify(books));
-    }
   }
 
 };
