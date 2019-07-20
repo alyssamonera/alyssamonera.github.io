@@ -1,0 +1,22 @@
+/* BOOK PROFILE */
+
+#storage-container .book-container{
+  margin-bottom: 0;
+}
+
+/* REMOVE BUTTON */
+
+.remove-match{
+  width: 100%;
+  font-size: 1.5em;
+  color: white;
+  background-color: rgb(100,0,0);
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 1em;
+  transition: 1s;
+}
+
+.remove-match:hover{
+  background-color: red;
+}
