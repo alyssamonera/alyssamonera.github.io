@@ -50,9 +50,6 @@ const library = {
   getSavedBooks: () => {
     if (localStorage.length != 0){
       let storedBooks = JSON.parse(localStorage.getItem("books"));
-      // storedBooks = [];
-      // localStorage.setItem("books", JSON.stringify(storedBooks));
-      // console.log(localStorage.getItem("books"));
     } else {
       let books = [];
       localStorage.setItem("books", JSON.stringify(books));

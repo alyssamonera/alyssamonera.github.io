@@ -86,7 +86,8 @@ const app = {
     $('#book-container').empty();
     $('#book-container').append(`<p>${summary}</p>`);
     $('.expand-button').on('click', eventHandlers.toggleReadMore);
-  },
+  }
+  
 };
 
 // =========================================================

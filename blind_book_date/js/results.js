@@ -4,7 +4,7 @@
 
 const bookStorage = {
   currentIndex: 0,
-  storedBooks: JSON.parse(localStorage.getItem("books")),
+  storedBooks: JSON.parse(localStorage.getItem("newBooks")),
 
   // ===============
   // returnResults()

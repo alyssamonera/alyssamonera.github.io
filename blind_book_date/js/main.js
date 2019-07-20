@@ -50,7 +50,8 @@ const eventHandlers = {
 // ===============
 // rightSwipe()
 // Runs on swipe-right button click
-// Adds a new book object to datesArray. Moves on to the next book or runs the results method.
+// Adds a new book object to datesArray. Moves on to the next book or heads to the results page.
+// The JSON stringify solution: https://stackoverflow.com/questions/38380462/syntaxerror-unexpected-token-o-in-json-at-position-1/38380728
 // ===============
   rightSwipe: () => {
     library.addNewDate();
@@ -59,6 +60,8 @@ const eventHandlers = {
     let index = library.currentIndex;
     let bookAmt = parseInt(localStorage.getItem("bookAmt"));
     if (library.likedBooks >= bookAmt || !library.bookArray[index]){
+      let newBooks = JSON.stringify(library.datesArray);
+      localStorage.setItem("newBooks", newBooks);
       globalFunc.goToPage("results");
     } else {
       app.updateDOM();
