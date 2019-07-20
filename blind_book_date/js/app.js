@@ -40,7 +40,8 @@ const app = {
   populateArrays: (data) => {
     if (data.items === undefined){
       let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
-      $('#book-container').append(errorMessage);
+      $('#book-container').prepend(errorMessage);
+      $('.expand-button').remove();
     } else {
       for (let i = 0; i < data.items.length; i++){
         let bookInfo = data.items[i].volumeInfo;
