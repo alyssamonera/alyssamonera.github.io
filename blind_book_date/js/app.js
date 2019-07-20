@@ -69,20 +69,20 @@ $( () => {
       let summary = userLibrary.bookArray[0].summary;
       let innerhtml =
         `<div class=tinder-container>
-          <div class=swipe-container>
+          <div class=swipe-container id=left-container>
             <button id="swipe-left">‹</button>
             <p>Swipe Left</p>
           </div>
           <div id=book-container>
             <p>${summary}</p>
           </div>
-          <div class=swipe-container>
+          <div class=swipe-container id=right-container>
             <button id="swipe-right">›</button>
             <p>Swipe Right</p>
           </div>`;
       $('main').append(innerhtml);
-      $('#swipe-left').on('click', eventHandlers.leftSwipe);
-      $('#swipe-right').on('click', eventHandlers.rightSwipe);
+      $('#left-container').on('click', eventHandlers.leftSwipe);
+      $('#right-container').on('click', eventHandlers.rightSwipe);
       $('.expand-button').on('click', eventHandlers.toggleReadMore);
     },
 
