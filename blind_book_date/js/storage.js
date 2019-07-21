@@ -16,6 +16,7 @@ const storage = {
         let $button = $('<button>').addClass('remove-match').text("Remove Match");
         $button.attr("isbn", book.isbn)
         $container.append(book.profileInfo, $button);
+        $('.expand-button').on('click', eventHandlers.toggleReadMore)
         $('#storage-container').append($container);
       }
       $('.remove-match').on('click', storage.removeMatch);
