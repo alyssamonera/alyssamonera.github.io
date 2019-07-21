@@ -14,7 +14,6 @@ const resultsList = {
   returnResults: () => {
     let currentBook = resultsList.storedBooks[0];
     $('#result').append(currentBook.profileInfo);
-    $('.expand-button').on('click', eventHandlers.toggleReadMore);
 
     let bookAmt = localStorage.getItem("bookAmt")
     if (resultsList.storedBooks.length < bookAmt){
