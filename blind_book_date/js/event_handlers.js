@@ -102,19 +102,26 @@ const eventHandlers = {
 // Sorts the match history oldest-newest and vice versa
 // ===============
   sortMatches: () => {
-    if ($(event.currentTarget).val() === "Newest to oldest"){
-      storage.populateStorage();
-    } else {
-      $('#storage-container').empty();
-      for (let i = storage.storedBooks.length - 1; i > -1; i--){
-        let book = storage.storedBooks[i];
-        let $container = $('<div>').addClass('match-container');
-        let $button = $('<button>').addClass('remove-match').text("Remove Match");
-        $button.attr("isbn", book.isbn)
-        $container.append(book.profileInfo, $button);
+    $('#storage-container').empty();
+    let value = $(event.currentTarget).val();
+    switch (value){
+      case "Recently added":
+        storage.populateStorage();
+        break;
+      case "Least recent":
+        for (let i = storage.storedBooks.length - 1; i > -1; i--){
+          let book = storage.storedBooks[i];
+          let $container = $('<div>').addClass('match-container');
+          let $button = $('<button>').addClass('remove-match').text("Remove Match");
+          $button.attr("isbn", book.isbn)
+          $container.append(book.profileInfo, $button);
         $('#storage-container').append($container);
-      }
-      $('.remove-match').on('click', storage.removeMatch);
+        }
+        $('.remove-match').on('click', storage.removeMatch);
+        break;
+      default:
+        storage.populateStorage();
+        break;
     }
   },
 

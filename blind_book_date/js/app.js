@@ -70,7 +70,7 @@ const app = {
   // Checks if the book object has all the required properties and, if so, returns the ISBN. Otherwise returns false.
   // ===============
   checkBook: (bookInfo) => {
-    if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
+    if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors && bookInfo.publishedDate && bookInfo.industryIdentifiers){
       if (bookInfo.description.length > 200){
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
         let yearMax = parseInt(localStorage.getItem("age-max"));
