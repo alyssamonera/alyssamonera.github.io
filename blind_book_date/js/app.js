@@ -73,8 +73,8 @@ const app = {
     if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
       if (bookInfo.description.length > 200){
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
-        let desiredYear = parseInt(localStorage.getItem("age-range"));
-        if (year >= desiredYear){
+        let yearMax = parseInt(localStorage.getItem("age-max"));
+        if (year >= yearMax){
           for (let value of bookInfo.industryIdentifiers){
             if (value.type === "ISBN_13"){
               return value.identifier;
@@ -88,7 +88,7 @@ const app = {
 // ===============
 // prepareImage(img)
 // Runs inside of app.populateArrays(data)
-// Turns http:// links into https:// and zooms in
+// Turns http:// links into https://
 // ===============
   prepareImage: (img) => {
     let safeImage = "https://" + img.split("http://")[1];

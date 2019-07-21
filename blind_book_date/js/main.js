@@ -64,12 +64,14 @@ const eventHandlers = {
         localStorage.setItem("key", $("#key").val())
         globalFunc.goToPage("app");
         break;
-      case "age-range":
+      case "age-min":
+      case "age-max":
         let age = parseInt($(event.currentTarget).val());
         let currentYear = new Date().getFullYear();
-        let oldestYear = currentYear - age;
-        localStorage.setItem("age-range", oldestYear);
-        $('#current-age').text(age);
+        let furthestYear = currentYear - age;
+        localStorage.setItem($id, furthestYear);
+        let p = $id.split("-")[1];
+        $(`#current-${p}`).text(age);
         break;
       case "genre":
         localStorage.setItem($id, $(event.currentTarget).val())
@@ -176,7 +178,7 @@ const eventHandlers = {
     library.bookArray = [];
     localStorage.setItem("genre", "Fiction");
     localStorage.setItem("bookAmt", 5);
-    localStorage.setItem("age-range", 100);
+    localStorage.setItem("age-max", 150);
   },
 
 };
@@ -210,8 +212,8 @@ const globalFunc = {
           let books = [];
           localStorage.setItem("books", JSON.stringify(books));
           break;
-        case "age-range":
-          localStorage.setItem("age-range", 1000);
+        case "age-max":
+          localStorage.setItem("age-max", 150);
           break;
       }
     }
@@ -229,11 +231,12 @@ $( () => {
   $('.go-div button').on('click', eventHandlers.toggleModal);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
   $('#home').on('click', eventHandlers.reset);
-  $('#age-range').on('input', eventHandlers.updateVal);
+  $('#age-max').on('input', eventHandlers.updateVal);
+  $('#age-min').on('input', eventHandlers.updateVal);
 
   globalFunc.checkStorage("genre");
   globalFunc.checkStorage("bookAmt");
   globalFunc.checkStorage("books");
-  globalFunc.checkStorage("age-range");
+  globalFunc.checkStorage("age-max");
 
 });

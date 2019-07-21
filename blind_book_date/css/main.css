@@ -119,16 +119,17 @@ input[type=number]{
   font-size: 1.5em;
 }
 
-#age-range{
+#age-max, #age-min{
   -webkit-appearance: none;
   appearance: none;
   width: 50%;
   height: 15px;
   background: #DDDDDD;
   outline: none;
+  margin: 1em;
 }
 
-#age-range::-webkit-slider-thumb{
+#age-max::-webkit-slider-thumb, #age-min::-webkit-slider-thumb{
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
