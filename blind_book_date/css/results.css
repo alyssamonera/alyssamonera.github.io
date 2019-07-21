@@ -16,6 +16,12 @@
   background-color: rgba(0,0,0,0.5);
 }
 
+.message {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.5em;
+  text-align: center;
+}
+
 /* COVER */
 
 .cover-container{

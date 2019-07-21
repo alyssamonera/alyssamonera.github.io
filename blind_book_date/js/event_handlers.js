@@ -45,11 +45,13 @@ const eventHandlers = {
 // Moves on to the next summary or runs the results method
 // ===============
   leftSwipe: () => {
+    library.currentIndex++;
     let index = library.currentIndex;
-    if (!library.bookArray[index] || !library.bookArray[index+1]){
+    if (!library.bookArray[index]){
+      let newBooks = JSON.stringify(library.datesArray);
+      localStorage.setItem("newBooks", newBooks);
       globalFunc.goToPage("results");
     } else {
-      library.currentIndex++;
       app.updateDOM();
     }
   },

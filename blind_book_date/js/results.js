@@ -12,17 +12,18 @@ const resultsList = {
   // Displays the first match & appropriate messages
   // ===============
   returnResults: () => {
-    let currentBook = resultsList.storedBooks[0];
-    $('#result').append(currentBook.profileInfo);
-
-    let bookAmt = localStorage.getItem("bookAmt")
+    let bookAmt = localStorage.getItem("bookAmt");
+    console.log(resultsList.storedBooks.length);
     if (resultsList.storedBooks.length < bookAmt){
+      if (resultsList.storedBooks.length === 0){$('main').empty()};
       let apology =
       `<div class=message>
-        <p>Sorry, that's all the swipes you have for today! You ended up with ${userLibrary.likedBooks} matches. Click the home link to start a new session.</p>
+        <p>Sorry, that's all the swipes you have for today! You ended up with ${resultsList.storedBooks.length} matches. Click the home link to start a new session.</p>
       </div>`;
       $('main').prepend(apology);
     }
+      let currentBook = resultsList.storedBooks[0];
+      $('#result').append(currentBook.profileInfo);
   },
 
   // ===============

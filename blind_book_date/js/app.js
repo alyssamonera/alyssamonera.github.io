@@ -123,6 +123,16 @@ const app = {
     $('#book-container').empty();
     $('#book-container').append(`<p>${summary}</p>`);
     $('.expand-button').on('click', eventHandlers.toggleReadMore);
+  },
+
+  // ===============
+  // reset()
+  // Runs upon page load
+  // Resets the appropriate arrays upon page refresh
+  // ===============
+  reset: () => {
+    library.bookArray = [];
+    localStorage.setItem("newBooks", JSON.stringify(library.bookArray));
   }
 
 };
@@ -134,5 +144,6 @@ $( () => {
 
   $('#left-container').on('click', eventHandlers.leftSwipe);
   $('#right-container').on('click', eventHandlers.rightSwipe);
+  app.reset();
   app.randomizeIndex();
 })

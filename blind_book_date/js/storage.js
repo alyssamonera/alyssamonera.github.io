@@ -15,11 +15,10 @@ const storage = {
         let $container = $('<div>').addClass('match-container');
         let $button = $('<button>').addClass('remove-match').text("Remove Match");
         $button.attr("isbn", book.isbn)
-        $container.append(book.profileInfo, $button);
-        $('.expand-button').on('click', eventHandlers.toggleReadMore)
-        $('#storage-container').append($container);
+        $container.append(book.profileInfo, $button);        $('#storage-container').append($container);
       }
       $('.remove-match').on('click', storage.removeMatch);
+      $('.expand-button').on('click', eventHandlers.toggleReadMore);
     }
   },
 
