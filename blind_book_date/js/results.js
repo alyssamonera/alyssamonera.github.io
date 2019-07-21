@@ -13,8 +13,8 @@ const resultsList = {
   // ===============
   returnResults: () => {
     let bookAmt = localStorage.getItem("bookAmt");
-    console.log(resultsList.storedBooks.length);
-    if (resultsList.storedBooks.length < bookAmt){
+    let currentWindow = window.location.pathname.split("_date/html/")[1];
+    if (resultsList.storedBooks.length < bookAmt && currentWindow === "results.html"){
       if (resultsList.storedBooks.length === 0){$('main').empty()};
       let apology =
       `<div class=message>
