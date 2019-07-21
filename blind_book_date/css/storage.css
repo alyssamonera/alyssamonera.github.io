@@ -17,15 +17,6 @@ main h1{
   margin-bottom: 0;
 }
 
-#storage-container .match-container{
-  opacity: 0.7;
-  transition: 0.5s;
-}
-
-#storage-container .match-container:hover{
-  opacity: 1;
-}
-
 /* REMOVE BUTTON */
 
 .remove-match{
@@ -42,4 +33,15 @@ main h1{
 .remove-match:hover{
   background-color: red;
   letter-spacing: 0.4em;
+}
+
+@media (min-width: 800px){
+  #storage-container .match-container{
+    opacity: 0.7;
+    transition: 0.5s;
+  }
+
+  #storage-container .match-container:hover{
+    opacity: 1;
+  }
 }
