@@ -49,7 +49,7 @@ const eventHandlers = {
 
 // ===============
 // updateVal()
-// Runs every time the genre or amount of books changes
+// Runs every time some user input changes
 // Updates the value of each variable in local storage
 // ===============
   updateVal: () => {
@@ -61,6 +61,8 @@ const eventHandlers = {
       eventHandlers.toggleModal();
       localStorage.setItem("key", $("#key").val())
       globalFunc.goToPage("app");
+    } else if ($id === "age-range") {
+      $('#current-age').text($(event.currentTarget).val());
     } else {
       localStorage.setItem($id, $(event.currentTarget).val())
       console.log(localStorage.getItem($id));
@@ -132,6 +134,11 @@ const eventHandlers = {
     $(event.currentTarget).siblings('span, .expand-button').toggleClass('hidden');
   },
 
+// ===============
+// sortMatches()
+// Runs on the select element in storage.html
+// Sorts the match history oldest-newest and vice versa
+// ===============
   sortMatches: () => {
     if ($(event.currentTarget).val() === "Newest to oldest"){
       storage.populateStorage();
@@ -179,7 +186,7 @@ const globalFunc = {
   // ===============
   // checkStorage()
   // Runs on launch
-  // If storage is empty, sets initial values
+  // If storage doesn't have a certain item, sets initial values
   // ===============
   checkStorage: (item) => {
     if (!localStorage.getItem(item)){
@@ -193,6 +200,9 @@ const globalFunc = {
         case "books":
           let books = [];
           localStorage.setItem("books", JSON.stringify(books));
+          break;
+        case "age-range":
+          localStorage.setItem("age-range", 1000);
           break;
       }
     }
@@ -210,9 +220,11 @@ $( () => {
   $('.go-div button').on('click', eventHandlers.toggleModal);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
   $('#home').on('click', eventHandlers.reset);
+  $('#age-range').on('input', eventHandlers.updateVal);
 
   globalFunc.checkStorage("genre");
   globalFunc.checkStorage("bookAmt");
   globalFunc.checkStorage("books");
+  globalFunc.checkStorage("age-range");
 
 });

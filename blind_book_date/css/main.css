@@ -138,6 +138,10 @@ input[type=number]{
   border-radius: 2em;
 }
 
+.age-form p{
+  margin-top: 0.5em;
+}
+
 /* GO BUTTON */
 
 .go-div{

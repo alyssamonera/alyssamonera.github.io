@@ -12,6 +12,7 @@ const app = {
     let genre = localStorage.getItem("genre");
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&langRestrict=en&key=${key}`, (data) => {
+      console.log(data);
       let minIndex = data.totalItems - 40;
       let randomIndex = Math.floor(Math.random() * minIndex);
       app.runGame(randomIndex)})
@@ -55,7 +56,7 @@ const app = {
             author: author,
             summary: summary,
             title: title,
-            cover: cover,
+            cover: app.prepareImage(cover),
             isbn: isbn
             }
             library.bookArray.push(newBook);
@@ -79,6 +80,16 @@ const app = {
         }
       }
     } else {return false}
+  },
+
+  // ===============
+  // secureImage(img)
+  // Runs inside of app.populateArrays(data)
+  // Turns http:// links into https:// and zooms in
+  // ===============
+  prepareImage: (img) => {
+    let safeImage = "https://" + img.split("http://")[1];
+    return safeImage;
   },
 
 // ===============
