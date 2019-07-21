@@ -61,8 +61,12 @@ const eventHandlers = {
         break;
       case "api-submit":
         eventHandlers.toggleModal();
-        localStorage.setItem("key", $("#key").val())
-        globalFunc.goToPage("app");
+        localStorage.setItem("key", $("#key").val());
+        if (globalFunc.checkMinMax()){
+          globalFunc.goToPage("app");
+        } else {
+          alert("Error! Please adjust your book age sliders.")
+        }
         break;
       case "age-min":
       case "age-max":
@@ -77,16 +81,6 @@ const eventHandlers = {
         localStorage.setItem($id, $(event.currentTarget).val())
         break;
     }
-  },
-
-// ===============
-// prepareGame()
-// Runs upon click of "submit" button in the modal
-// Checks for an API key, then goes to the next page
-// ===============
-  prepareGame: () => {
-    if (!localStorage.getItem("key")){eventHandlers.toggleModal()}
-    else {globalFunc.goToPage("app");}
   },
 
 // ===============
@@ -178,7 +172,8 @@ const eventHandlers = {
     library.bookArray = [];
     localStorage.setItem("genre", "Fiction");
     localStorage.setItem("bookAmt", 5);
-    localStorage.setItem("age-max", 150);
+    localStorage.setItem("age-max", 1719);
+    localStorage.setItem("age-min", 2019);
   },
 
 };
@@ -195,26 +190,47 @@ const globalFunc = {
   },
 
   // ===============
+  // checkMinMax()
+  // Runs inside of eventHandlers.updateVal()
+  // Returns true if the min and max ages are compatible, otherwise returns false
+  // ===============
+    checkMinMax: () => {
+      let min = localStorage.getItem("age-min");
+      let max = localStorage.getItem("age-max");
+      if (min < max || max > min){
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+  // ===============
   // checkStorage()
   // Runs on launch
   // If storage doesn't have a certain item, sets initial values
   // ===============
-  checkStorage: (item) => {
-    if (!localStorage.getItem(item)){
-      switch (item){
-        case "genre":
-          localStorage.setItem("genre", "Fiction");
-          break;
-        case "bookAmt":
-          localStorage.setItem("bookAmt", 5);
-          break;
-        case "books":
-          let books = [];
-          localStorage.setItem("books", JSON.stringify(books));
-          break;
-        case "age-max":
-          localStorage.setItem("age-max", 150);
-          break;
+  checkStorage: () => {
+    let list = ["genre", "bookAmt", "books", "age-min", "age-max"];
+    for (let item in list){
+      if (!localStorage.getItem(item)){
+        switch (item){
+          case "genre":
+            localStorage.setItem("genre", "Fiction");
+            break;
+          case "bookAmt":
+            localStorage.setItem("bookAmt", 5);
+            break;
+          case "books":
+            let books = [];
+            localStorage.setItem("books", JSON.stringify(books));
+            break;
+          case "age-max":
+            localStorage.setItem("age-max", 1719);
+            break;
+          case "age-min":
+            localStorage.setItem("age-min", 2019);
+            break;
+        }
       }
     }
   }
@@ -231,12 +247,9 @@ $( () => {
   $('.go-div button').on('click', eventHandlers.toggleModal);
   $('#menu-api, #exit').on('click', eventHandlers.toggleModal);
   $('#home').on('click', eventHandlers.reset);
-  $('#age-max').on('input', eventHandlers.updateVal);
-  $('#age-min').on('input', eventHandlers.updateVal);
+  $('#age-max, #age-min').on('input', eventHandlers.updateVal);
 
-  globalFunc.checkStorage("genre");
-  globalFunc.checkStorage("bookAmt");
-  globalFunc.checkStorage("books");
-  globalFunc.checkStorage("age-max");
+
+  globalFunc.checkStorage();
 
 });
