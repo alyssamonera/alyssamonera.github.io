@@ -75,12 +75,9 @@ const app = {
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
         let yearMax = parseInt(localStorage.getItem("age-max"));
         let yearMin = parseInt(localStorage.getItem("age-min"));
-        debugger;
         if (year >= yearMax && year <= yearMin){
-          debugger;
           for (let value of bookInfo.industryIdentifiers){
             if (value.type === "ISBN_13"){
-              debugger;
               return value.identifier;
             }
           }
