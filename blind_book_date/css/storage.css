@@ -11,6 +11,11 @@ main h1{
   margin: 0 auto;
 }
 
+#storage-container > p{
+  text-align: center;
+  font-size: 1.5em;
+}
+
 /* BOOK PROFILE */
 
 #storage-container .book-container{
