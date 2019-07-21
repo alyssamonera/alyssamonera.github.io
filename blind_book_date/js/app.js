@@ -12,7 +12,6 @@ const app = {
     let genre = localStorage.getItem("genre");
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&langRestrict=en&key=${key}`, (data) => {
-      console.log(data);
       let minIndex = data.totalItems - 40;
       let randomIndex = Math.floor(Math.random() * minIndex);
       app.runGame(randomIndex)})
@@ -73,20 +72,24 @@ const app = {
   checkBook: (bookInfo) => {
     if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors){
       if (bookInfo.description.length > 200){
-        for (let value of bookInfo.industryIdentifiers){
-          if (value.type === "ISBN_13"){
-            return value.identifier;
+        let year = parseInt(bookInfo.publishedDate.split("-")[0]);
+        let desiredYear = parseInt(localStorage.getItem("age-range"));
+        if (year >= desiredYear){
+          for (let value of bookInfo.industryIdentifiers){
+            if (value.type === "ISBN_13"){
+              return value.identifier;
+            }
           }
         }
       }
     } else {return false}
   },
 
-  // ===============
-  // secureImage(img)
-  // Runs inside of app.populateArrays(data)
-  // Turns http:// links into https:// and zooms in
-  // ===============
+// ===============
+// prepareImage(img)
+// Runs inside of app.populateArrays(data)
+// Turns http:// links into https:// and zooms in
+// ===============
   prepareImage: (img) => {
     let safeImage = "https://" + img.split("http://")[1];
     return safeImage;

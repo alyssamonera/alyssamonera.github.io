@@ -54,18 +54,26 @@ const eventHandlers = {
 // ===============
   updateVal: () => {
     let $id = $(event.currentTarget).attr('id');
-    if ($id === "bookAmt"){
-      let parsedValue = parseInt($(event.currentTarget).val())
-      localStorage.setItem("bookAmt", parsedValue);
-    } else if ($id === "api-submit"){
-      eventHandlers.toggleModal();
-      localStorage.setItem("key", $("#key").val())
-      globalFunc.goToPage("app");
-    } else if ($id === "age-range") {
-      $('#current-age').text($(event.currentTarget).val());
-    } else {
-      localStorage.setItem($id, $(event.currentTarget).val())
-      console.log(localStorage.getItem($id));
+    switch ($id){
+      case "bookAmt":
+        let parsedValue = parseInt($(event.currentTarget).val())
+        localStorage.setItem("bookAmt", parsedValue);
+        break;
+      case "api-submit":
+        eventHandlers.toggleModal();
+        localStorage.setItem("key", $("#key").val())
+        globalFunc.goToPage("app");
+        break;
+      case "age-range":
+        let age = parseInt($(event.currentTarget).val());
+        let currentYear = new Date().getFullYear();
+        let oldestYear = currentYear - age;
+        localStorage.setItem("age-range", oldestYear);
+        $('#current-age').text(age);
+        break;
+      case "genre":
+        localStorage.setItem($id, $(event.currentTarget).val())
+        break;
     }
   },
 
@@ -154,19 +162,6 @@ const eventHandlers = {
       }
       $('.remove-match').on('click', storage.removeMatch);
     }
-  }
-
-};
-
-const globalFunc = {
-  // ===============
-  // goToPage(page)
-  // Runs when conditions are met to go to the next page
-  // Directs the user to the desired page
-  // ===============
-  goToPage: (page) => {
-    let slicedHREF = window.location.pathname.split("_date/");
-    window.location.pathname = `${slicedHREF[0]}_date/html/${page}.html`;
   },
 
   // ===============
@@ -181,6 +176,20 @@ const globalFunc = {
     library.bookArray = [];
     localStorage.setItem("genre", "Fiction");
     localStorage.setItem("bookAmt", 5);
+    localStorage.setItem("age-range", 100);
+  },
+
+};
+
+const globalFunc = {
+  // ===============
+  // goToPage(page)
+  // Runs when conditions are met to go to the next page
+  // Directs the user to the desired page
+  // ===============
+  goToPage: (page) => {
+    let slicedHREF = window.location.pathname.split("_date/");
+    window.location.pathname = `${slicedHREF[0]}_date/html/${page}.html`;
   },
 
   // ===============
