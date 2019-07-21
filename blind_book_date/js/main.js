@@ -80,11 +80,11 @@ const globalFunc = {
   checkStorage: () => {
     let list = ["genre", "bookAmt", "books", "age-min", "age-max"];
     debugger;
-    for (let item in list){
+    for (let i = 0; i < list.length; i++){
       debugger;
-      if (!localStorage.getItem(item)){
+      if (!localStorage.getItem(list[i])){
         debugger;
-        switch (item){
+        switch (list[i]){
           case "genre":
             localStorage.setItem("genre", "Fiction");
             break;
