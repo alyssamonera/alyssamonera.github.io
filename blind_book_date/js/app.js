@@ -38,7 +38,6 @@ const app = {
   // Stores books as objects in the library bookArray property
   // ===============
   populateArrays: (data) => {
-    debugger;
     if (data.items === undefined){
       let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
       $('#book-container').prepend(errorMessage);
@@ -47,6 +46,7 @@ const app = {
       for (let i = 0; i < data.items.length; i++){
         let bookInfo = data.items[i].volumeInfo;
         let isbn = app.checkBook(bookInfo);
+        debugger;
         if (isbn){
           let author = bookInfo.authors[0];
           let summary = bookInfo.description;
@@ -72,13 +72,16 @@ const app = {
   // ===============
   checkBook: (bookInfo) => {
     if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors && bookInfo.publishedDate && bookInfo.industryIdentifiers){
+      debugger;
       if (bookInfo.description.length > 200){
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
         let yearMax = parseInt(localStorage.getItem("age-max"));
         let yearMin = parseInt(localStorage.getItem("age-min"));
         if (year >= yearMax && year <= yearMin){
+          debugger;
           for (let value of bookInfo.industryIdentifiers){
             if (value.type === "ISBN_13"){
+              debugger;
               return value.identifier;
             }
           }
