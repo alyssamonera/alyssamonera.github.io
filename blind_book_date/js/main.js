@@ -36,7 +36,7 @@ const library = {
     </div>`;
     library.datesArray.push(newDate);
     let storedBooks = JSON.parse(localStorage.getItem("books"));
-    storedBooks.push(newDate);
+    storedBooks.unshift(newDate);
     localStorage.setItem("books", JSON.stringify(storedBooks))
   }
 
