@@ -45,6 +45,7 @@ const storage = {
 
 $( () => {
 
+  $('#storage-select').change(eventHandlers.sortMatches);
   storage.populateStorage();
 
 })

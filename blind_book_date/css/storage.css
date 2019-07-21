@@ -1,9 +1,17 @@
-/* BOOK PROFILE */
+/* HEADING */
 
 main h1{
   text-align: center;
   font-family: 'Roboto Slab', serif;
 }
+
+#storage-select{
+  display: block;
+  font-size: 1.5em;
+  margin: 0 auto;
+}
+
+/* BOOK PROFILE */
 
 #storage-container .book-container{
   margin-bottom: 0;
@@ -11,7 +19,7 @@ main h1{
 
 #storage-container .match-container{
   opacity: 0.7;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 #storage-container .match-container:hover{
