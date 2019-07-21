@@ -38,6 +38,7 @@ const app = {
   // Stores books as objects in the library bookArray property
   // ===============
   populateArrays: (data) => {
+    debugger;
     if (data.items === undefined){
       let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
       $('#book-container').prepend(errorMessage);
@@ -119,7 +120,6 @@ const app = {
   // ===============
   updateDOM: () => {
     let i = library.currentIndex;
-    console.log(i, library.bookArray);
     debugger;
     let summary = library.bookArray[i].summary;
     $('#book-container').empty();
