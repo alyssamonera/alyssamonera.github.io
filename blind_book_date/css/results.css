@@ -45,6 +45,8 @@
   color: white;
   font-family: 'Roboto Slab', serif;
   border-radius: 1em;
+  height: 500px;
+  overflow: scroll;
 }
 
 .details-container ul{
