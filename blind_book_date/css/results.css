@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-#result .book-container{
+.book-container{
   display: flex;
   justify-content: space-around;
   border: 1px solid black;
@@ -18,12 +18,12 @@
 
 /* COVER */
 
-#result .cover-container{
+.cover-container{
   display: flex;
   align-items: center;
 }
 
-#result .cover-container img{
+.cover-container img{
   height: 400px;
   width: 250px;
   box-shadow: 4px 6px rgba(0,0,0,0.4);
@@ -33,7 +33,7 @@
 
 /* DETAILS */
 
-#result .details-container{
+.details-container{
   padding: 0 1em;
   background-color: rgba(0,0,0,0.4);
   color: white;
@@ -41,14 +41,14 @@
   border-radius: 1em;
 }
 
-#result .details-container ul{
+.details-container ul{
   list-style-type: none;
   font-size: 1.5em;
   font-family: Arial;
   line-height: 1.5;
 }
 
-#result .details-container button {
+.details-container button {
   background-color: white;
 }
 

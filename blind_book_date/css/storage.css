@@ -35,13 +35,39 @@ main h1{
   letter-spacing: 0.4em;
 }
 
+/* ===========================BREAK================================ */
+
 @media (min-width: 800px){
-  #storage-container .match-container{
-    opacity: 0.7;
-    transition: 0.5s;
+
+  /* PAGE-WIDE CONTAINER */
+
+  #storage-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
 
-  #storage-container .match-container:hover{
-    opacity: 1;
+  /* OVERALL MATCH */
+
+  #storage-container .match-container{
+    width: 48%;
   }
+
+  #storage-container .book-container{
+    flex-direction: column;
+  }
+
+  /* COVER */
+
+  #storage-container .cover-container img{
+    margin: 0 auto;
+    margin-bottom: 1em;
+    transition: 3s;
+  }
+
+  #storage-container .cover-container img:hover{
+    height: 500px;
+    width: 350px;
+  }
+
 }
