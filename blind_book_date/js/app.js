@@ -119,6 +119,8 @@ const app = {
   // ===============
   updateDOM: () => {
     let i = library.currentIndex;
+    console.log(i, library.bookArray);
+    debugger;
     let summary = library.bookArray[i].summary;
     $('#book-container').empty();
     $('#book-container').append(`<p>${summary}</p>`);
