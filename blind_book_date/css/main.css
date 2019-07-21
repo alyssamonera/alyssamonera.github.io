@@ -112,6 +112,32 @@ input[type=number]{
   text-align: center;
 }
 
+/* AGE FIELD */
+
+.age-form{
+  text-align: center;
+  font-size: 1.5em;
+}
+
+#age-range{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50%;
+  height: 15px;
+  background: #DDDDDD;
+  outline: none;
+}
+
+#age-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: rgb(100,200,100);
+  cursor: pointer;
+  border-radius: 2em;
+}
+
 /* GO BUTTON */
 
 .go-div{
@@ -186,7 +212,7 @@ input[type=number]{
 }
 
 /* ========================BREAK================================ */
-@media (min-width: 700px){
+@media (min-width: 800px){
 
   .options-div{
     display: flex;
