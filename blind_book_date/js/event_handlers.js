@@ -115,7 +115,21 @@ const eventHandlers = {
         storage.populateStorage();
         break;
       case "Alphabetical Author":
-        storage.storedBooks.sort((a, b) => (a.author > b.author) ? 1 : -1);
+
+        storage.storedBooks.sort((a, b) => {
+          let aArray = a.author.split(" ");
+          let bArray = b.author.split(" ");
+          let aString = aArray[aArray.length-1];
+          let bString = bArray[bArray.length-1];
+          if (aString > bString){
+            return 1;
+          } else if (bString > aString){
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
         storage.populateStorage();
         break;
       case "Recently added":
