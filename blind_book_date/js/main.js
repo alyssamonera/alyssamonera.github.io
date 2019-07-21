@@ -79,6 +79,7 @@ const globalFunc = {
   // ===============
   checkStorage: () => {
     let list = ["genre", "bookAmt", "books", "age-min", "age-max"];
+    debugger;
     for (let item in list){
       if (!localStorage.getItem(item)){
         switch (item){
@@ -112,5 +113,5 @@ const globalFunc = {
 $( () => {
 
   globalFunc.checkStorage();
-  
+
 });

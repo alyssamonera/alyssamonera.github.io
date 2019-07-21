@@ -46,7 +46,6 @@ const app = {
       for (let i = 0; i < data.items.length; i++){
         let bookInfo = data.items[i].volumeInfo;
         let isbn = app.checkBook(bookInfo);
-        debugger;
         if (isbn){
           let author = bookInfo.authors[0];
           let summary = bookInfo.description;
@@ -72,11 +71,11 @@ const app = {
   // ===============
   checkBook: (bookInfo) => {
     if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors && bookInfo.publishedDate && bookInfo.industryIdentifiers){
-      debugger;
       if (bookInfo.description.length > 200){
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
         let yearMax = parseInt(localStorage.getItem("age-max"));
         let yearMin = parseInt(localStorage.getItem("age-min"));
+        debugger;
         if (year >= yearMax && year <= yearMin){
           debugger;
           for (let value of bookInfo.industryIdentifiers){
