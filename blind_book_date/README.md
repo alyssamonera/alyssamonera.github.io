@@ -103,7 +103,7 @@ const storage = {
 
 1. To begin, select a genre. Then input how many books you would like to match with, and pick how "old" or "young" you'd like the books to be. This last part will narrow down how long ago your results were published.<br>If you don't select anything, these values will default to fiction, 5, 1719, and 2019 respectively. Hit "go" when you're ready.
 
-2. **After hitting "go," a modal will come up and prompt you to enter an API key.** See Installation below for details on obtaining a key. *You must hit submit after entering a valid API key to get to the next page. The "go" button will not take you there.*
+2. After hitting "go," a modal will come up and prompt you to enter an API key. See Installation below for details on obtaining a key. **You must hit submit after entering a valid API key to get to the next page. The "go" button will not take you there.**
 
 3. This will take you to the next page. Assuming the data is successfully retrieved, you will be presented with a series of summaries displayed on a "carousel."<br> Hit the arrow on the right to "swipe right" and save the book. <br> Hit the left arrow to "swipe left" and discard it. <br> This will continue until you've either hit your book quota (the amount you entered earlier) or until you've run out of books to swipe through.
 
@@ -123,7 +123,7 @@ To install this app on your local computer:
 
 <img src="https://i.imgur.com/bXqjE8p.png">
 
-3. Enter an API key. [If you don't already have one, here's how to obtain it.](https://developers.google.com/books/docs/v1/getting_started).
+3. Enter an API key. [If you don't already have one, here's how to obtain it.](https://developers.google.com/books/docs/v1/getting_started)
 
 4. You may also test out the app over at [the live site here](https://alyssamonera.github.io/blind_book_date).
 
@@ -132,6 +132,6 @@ To install this app on your local computer:
 
 1. **This app requires a Google Books API key to run in its current state.** This app was developed for a General Assembly front-end development project and currently has no back-end to securely store an API key. This is a known issue and will be fixed in a forthcoming update. See Installation below for details on obtaining a key.
 
-2. **Data will occasionally fail to load from the API and fail to display summaries on the app page.** If this happens, an error message will usually display instructing the user to refresh the page. If the app page opens with only a read-more inside, please refresh the page and try again. *If this doesn't fix the issue, please contact me.*
+2. **Data will occasionally fail to load from the API and fail to display summaries on the app page.** If this happens, an error message will usually display instructing the user to refresh the page. If the app page opens with only a read-more inside, please refresh the page and try again. If this doesn't fix the issue, please contact me.
 
 3. **If you encounter any other issues, feel free to contact me.** I am new to the software engineering scene and always open to pointers.
