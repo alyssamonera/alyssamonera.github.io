@@ -12,6 +12,7 @@ const app = {
     let genre = localStorage.getItem("genre");
     app.grabJSON(genre);
 
+// NOTE: This was meant to add additional relevant categories to the book array, but there was a bug relating to the error message when I included this code, so for now it is commented out. Will work this out later.
     // switch (genre){
     //   case "Nonfiction":
     //     app.grabJSON("autobiography");
