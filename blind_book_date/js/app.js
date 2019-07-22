@@ -4,66 +4,70 @@
 const app = {
 
   // ===============
-  // randomizeIndex()
+  // searchGenres()
   // Runs on page load
-  // Gets a random index and plugs it into app.runGame()
+  // Plugs user input genre into app.grabJSON, as well as related genres
   // ===============
-  randomizeIndex: () => {
+  searchGenres: () => {
     let genre = localStorage.getItem("genre");
-    let key = localStorage.getItem("key");
-    $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&langRestrict=en&key=${key}`, (data) => {
-      let minIndex = data.totalItems - 40;
-      let randomIndex = Math.floor(Math.random() * minIndex);
-      debugger;
-      app.runGame(randomIndex)})
+    app.grabJSON(genre);
+
+    switch (genre){
+      case "Nonfiction":
+        app.grabJSON("autobiography");
+        app.grabJSON("biology");
+        break;
+      case "Thriller":
+        app.grabJSON('"crime fiction"');
+        app.grabJSON("suspense");
+        break;
+      default:
+        break;
+    }
   },
 
   // ===============
-  // runGame(index)
-  // Runs inside of eventHandlers.prepareGame()
-  // Runs user input as parameters in the API, then filters the data through app.populateArrays().
+  // grabJSON()
+  // Runs inside of app.searchGenres()
+  // Grabs data from the API for the selected genre, then runs app.randomizeIndex()
   // ===============
-  runGame: (index) => {
-    let genre = localStorage.getItem("genre");
+  grabJSON: (genre) => {
+    let subjectString = "https://www.googleapis.com/books/v1/volumes?q=subject:";
+    let key = localStorage.getItem("key");
+    let keyString = `&langRestrict=en&key=${key}`;
+    $.getJSON(subjectString + genre + keyString, (data) => {
+      let index = app.randomizeIndex(data);
+      app.runGame(index, genre);
+    });
+  },
+
+  // ===============
+  // randomizeIndex()
+  // Runs inside of app.grabJSON()
+  // Gets a random index and returns it
+  // ===============
+  randomizeIndex: (data) => {
+    let minIndex = data.totalItems - 40;
+    let randomIndex = Math.floor(Math.random() * minIndex);
+    return randomIndex;
+  },
+
+  // ===============
+  // runGame(index, genre)
+  // Runs inside of app.grabJSON()
+  // Runs user input as parameters in the API, then filters the data through app.populateArrays() and updates the DOM
+  // ===============
+  runGame: (index, genre) => {
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
-      app.populateArrays(data);
-      app.shortenSummary();
-      app.updateDOM();
-    })
-  },
-
-  // ===============
-  // populateArrays(data)
-  // Runs inside of app.runGame()
-  // Stores books as objects in the library bookArray property
-  // ===============
-  populateArrays: (data) => {
-    if (data.items === undefined){
-      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please return to the homepage to try again.</p>`;
-      $('#book-container').prepend(errorMessage);
-      $('.expand-button').remove();
-    } else {
       for (let i = 0; i < data.items.length; i++){
         let bookInfo = data.items[i].volumeInfo;
         let isbn = app.checkBook(bookInfo);
-        if (isbn){
-          let author = bookInfo.authors[0];
-          let summary = bookInfo.description;
-          let title = bookInfo.title;
-          let cover = bookInfo.imageLinks.thumbnail;
-          let newBook = {
-            author: author,
-            summary: summary,
-            title: title,
-            cover: app.prepareImage(cover),
-            isbn: isbn
-            }
-            library.bookArray.push(newBook);
-          }
-        }
+        if (isbn){app.addBook(bookInfo)};
       }
-    },
+      app.updateDOM();
+    })
+  },
 
   // ===============
   // checkBook(bookInfo)
@@ -87,6 +91,38 @@ const app = {
     } else {return false}
   },
 
+  // ===============
+  // populateArrays(data)
+  // Runs inside of app.runGame()
+  // Stores books as objects in the library bookArray property
+  // ===============
+  populateArrays: (data) => {
+    if (data.items === undefined){
+      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our developer through the "About" page.</p>`;
+      $('#book-container').prepend(errorMessage);
+      $('.expand-button').remove();
+    } else {
+      for (let i = 0; i < data.items.length; i++){
+        let bookInfo = data.items[i].volumeInfo;
+        let isbn = app.checkBook(bookInfo);
+        if (isbn){
+          let author = bookInfo.authors[0];
+          let summary = bookInfo.description;
+          let title = bookInfo.title;
+          let cover = bookInfo.imageLinks.thumbnail;
+          let newBook = {
+            author: author,
+            summary: app.shortenSummary(summary),
+            title: title,
+            cover: app.prepareImage(cover),
+            isbn: isbn
+            }
+            library.bookArray.push(newBook);
+          }
+        }
+      }
+    },
+
 // ===============
 // prepareImage(img)
 // Runs inside of app.populateArrays(data)
@@ -99,18 +135,15 @@ const app = {
 
 // ===============
 // shortenSummary()
-// Runs inside of app.runGame()
-// Gives extra text a hidden class so it can be hidden on mobile
+// Runs inside of app.populateArrays()
+// Returns either an abbreviated summary with a read-more, or just a regular summary
 // ===============
-  shortenSummary: () => {
-    for (let i = 0; i < library.bookArray.length; i++){
-      let summary = library.bookArray[i].summary;
-      if (summary.length > 400){
-        let shortSummary = `
-        ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span><button class="expand-button hidden">Show less</button>`;
-        library.bookArray[i].summary = shortSummary;
-      }
-    }
+  shortenSummary: (summary) => {
+    if (summary.length > 400){
+      let shortSummary = `
+      ${summary.slice(0, 400)}<span>...</span><button class=expand-button>Read more</button><span class=hidden>${summary.slice(400)}</span><button class="expand-button hidden">Show less</button>`;
+      return shortSummary;
+    } else {return summary}
   },
 
   // ===============
@@ -146,5 +179,5 @@ $( () => {
   $('#left-container').on('click', eventHandlers.leftSwipe);
   $('#right-container').on('click', eventHandlers.rightSwipe);
   app.reset();
-  app.randomizeIndex();
+  app.searchGenres();
 })
