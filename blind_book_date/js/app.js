@@ -14,6 +14,7 @@ const app = {
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&langRestrict=en&key=${key}`, (data) => {
       let minIndex = data.totalItems - 40;
       let randomIndex = Math.floor(Math.random() * minIndex);
+      debugger;
       app.runGame(randomIndex)})
   },
 
@@ -119,7 +120,6 @@ const app = {
   // ===============
   updateDOM: () => {
     let i = library.currentIndex;
-    debugger;
     let summary = library.bookArray[i].summary;
     $('#book-container').empty();
     $('#book-container').append(`<p>${summary}</p>`);
