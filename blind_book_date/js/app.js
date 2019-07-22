@@ -12,18 +12,18 @@ const app = {
     let genre = localStorage.getItem("genre");
     app.grabJSON(genre);
 
-    switch (genre){
-      case "Nonfiction":
-        app.grabJSON("autobiography");
-        app.grabJSON("biology");
-        break;
-      case "Thriller":
-        app.grabJSON('"crime fiction"');
-        app.grabJSON("suspense");
-        break;
-      default:
-        break;
-    }
+    // switch (genre){
+    //   case "Nonfiction":
+    //     app.grabJSON("autobiography");
+    //     app.grabJSON("biology");
+    //     break;
+    //   case "Thriller":
+    //     app.grabJSON('"crime fiction"');
+    //     app.grabJSON("suspense");
+    //     break;
+    //   default:
+    //     break;
+    // }
   },
 
   // ===============
@@ -64,6 +64,7 @@ const app = {
         let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our team through the "About" page.</p>`;
         $('#book-container').prepend(errorMessage);
         $('.expand-button').remove();
+        // setTimeout(() => {globalFunc.goToPage("index.html")}, 5000);
       } else {
         for (let i = 0; i < data.items.length; i++){
           let bookInfo = data.items[i].volumeInfo;
@@ -82,7 +83,7 @@ const app = {
   // ===============
   checkBook: (bookInfo) => {
     if (bookInfo.description && bookInfo.imageLinks && bookInfo.authors && bookInfo.publishedDate && bookInfo.industryIdentifiers){
-      if (bookInfo.description.length > 200){
+      if (bookInfo.description.length > 150){
         let year = parseInt(bookInfo.publishedDate.split("-")[0]);
         let yearMax = parseInt(localStorage.getItem("age-max"));
         let yearMin = parseInt(localStorage.getItem("age-min"));

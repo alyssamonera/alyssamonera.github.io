@@ -54,7 +54,7 @@ const globalFunc = {
   // ===============
   goToPage: (page) => {
     let slicedHREF = window.location.pathname.split("_date/");
-    window.location.pathname = `${slicedHREF[0]}_date/html/${page}.html`;
+    window.location.pathname = `${slicedHREF[0]}_date/${page}`;
   },
 
   // ===============

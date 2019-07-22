@@ -19,7 +19,7 @@ const eventHandlers = {
         eventHandlers.toggleModal();
         localStorage.setItem("key", $("#key").val());
         if (globalFunc.checkMinMax()){
-          globalFunc.goToPage("app");
+          globalFunc.goToPage("html/app.html");
         } else {
           alert("Error! Please adjust your book age sliders.")
         }
@@ -50,7 +50,7 @@ const eventHandlers = {
     if (!library.bookArray[index]){
       let newBooks = JSON.stringify(library.datesArray);
       localStorage.setItem("newBooks", newBooks);
-      globalFunc.goToPage("results");
+      globalFunc.goToPage("html/results.html");
     } else {
       app.updateDOM();
     }
@@ -71,7 +71,7 @@ const eventHandlers = {
     if (library.likedBooks >= bookAmt || !library.bookArray[index]){
       let newBooks = JSON.stringify(library.datesArray);
       localStorage.setItem("newBooks", newBooks);
-      globalFunc.goToPage("results");
+      globalFunc.goToPage("html/results.html");
     } else {
       app.updateDOM();
     }
