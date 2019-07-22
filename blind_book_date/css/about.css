@@ -1,0 +1,30 @@
+.about-textbox{
+  text-align: center;
+}
+
+.about-textbox a{
+  color: rgb(150,0,0);
+}
+
+.about-textbox a:hover{
+  color: red;
+}
+
+.about-textbox ul{
+  text-align: left;
+}
+
+.about-textbox h1{
+  letter-spacing: 2px;
+  font-family: 'Roboto Slab', serif;
+}
+
+.about-textbox h2{
+  letter-spacing: 3px;
+  font-family: 'Roboto Slab', serif;
+  text-transform: uppercase;
+}
+
+.about-textbox p{
+  line-height: 1.5;
+}
