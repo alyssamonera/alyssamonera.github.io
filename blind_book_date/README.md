@@ -10,9 +10,9 @@ Blind Book Date is a book discovery engine. It pulls book information from an AP
 * All matches are saved in local storage, so the user can revisit them later.
 * After matching, the user will be able to see the title, cover, and author of all their matches.
 
-## How It Works
+# How It Works
 
-###Technologies Used
+##Technologies Used
 This app currently utilizes HTML5, CSS3, JavaScript, jQuery, JSON/AJAX, and [the Google Books API](https://developers.google.com/books/).
 
 * Major HTML features include: links, buttons, modals, input fields, "carousels"
@@ -21,7 +21,7 @@ This app currently utilizes HTML5, CSS3, JavaScript, jQuery, JSON/AJAX, and [the
 
 * Major JavaScript/jQuery features include: Object-Oriented Programming (OOP), methods, conditionals, DOM manipulation, local storage
 
-###Approaches Taken
+##Approaches Taken
 
 * Blind Book Dating utilizes local storage to save user input and past matches across multiple pages. Inputs such as genre, number of desired matches, book age, match history, and recent match history are all stored in local storage. **The user's API key is also saved here.**
 
@@ -96,28 +96,19 @@ const storage = {
 
 * When users select new sorting options on this page, the array holding these saved book objects will be re-sorted, and the page will be emptied and refilled using the newly sorted array.
 
-###Instructions
+##Instructions
 
-1. To begin, select a genre. Then input how many books you would like to match with, and pick how "old" or "young" you'd like the books to be. This last part will narrow down how long ago your results were published.
-
-If you don't select anything, these values will default to fiction, 5, 1719, and 2019 respectively. Hit "go" when you're ready.
+1. To begin, select a genre. Then input how many books you would like to match with, and pick how "old" or "young" you'd like the books to be. This last part will narrow down how long ago your results were published.<br>If you don't select anything, these values will default to fiction, 5, 1719, and 2019 respectively. Hit "go" when you're ready.
 
 2. **After hitting "go," a modal will come up and prompt you to enter an API key.** See Installation below for details on obtaining a key. *You must hit submit after entering a valid API key to get to the next page. The "go" button will not take you there.*
 
-3. This will take you to the next page. Assuming the data is successfully retrieved, you will be presented with a series of summaries displayed on a "carousel."
-
-* Hit the arrow on the right to "swipe right" and save the book.
-* Hit the left arrow to "swipe left" and discard it.
-
-This will continue until you've either hit your book quota (the amount you entered earlier) or until you've run out of books to swipe through.
+3. This will take you to the next page. Assuming the data is successfully retrieved, you will be presented with a series of summaries displayed on a "carousel."<br> Hit the arrow on the right to "swipe right" and save the book. <br> Hit the left arrow to "swipe left" and discard it. <br> This will continue until you've either hit your book quota (the amount you entered earlier) or until you've run out of books to swipe through.
 
 4. Once you've completed your swipes, you will be taken to a results page that displays your most recent matches from the most recent round of swipes. These are also presented on a carousel, but now they come with a title, author, and cover in addition to the summary.
 
-5. At any time after you've matched with a book, regardless of whether you've hit the results screen, you may navigate to your match history and view all the matches you've had so far. The link to this page is located up top, titled "Your Match History."
+5. At any time after you've matched with a book, regardless of whether you've hit the results screen, you may navigate to your match history and view all the matches you've had so far. The link to this page is located up top, titled "Your Match History." <br> On this page, you may sort through your matches by date added, title, and author. You may also remove any match from your history.
 
-On this page, you may sort through your matches by date added, title, and author. You may also remove any match from your history.
-
-###Installation
+##Installation
 
 To install this app on your local computer:
 
@@ -134,7 +125,7 @@ To install this app on your local computer:
 4. You may also test out the app over at [the live site here](https://alyssamonera.github.io/blind_book_date).
 
 
-## Known Issues
+# Known Issues
 
 1. **This app requires a Google Books API key to run in its current state.** This app was developed for a General Assembly front-end development project and currently has no back-end to securely store an API key. This is a known issue and will be fixed in a forthcoming update. See Installation below for details on obtaining a key.
 
