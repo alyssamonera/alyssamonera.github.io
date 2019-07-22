@@ -6,7 +6,7 @@ const app = {
   // ===============
   // searchGenres()
   // Runs on page load
-  // Plugs user input genre into app.grabJSON, as well as related genres
+  // Plugs selected and relevant genres into app.grabJSON()
   // ===============
   searchGenres: () => {
     let genre = localStorage.getItem("genre");
@@ -29,7 +29,7 @@ const app = {
   // ===============
   // grabJSON()
   // Runs inside of app.searchGenres()
-  // Grabs data from the API for the selected genre, then runs app.randomizeIndex()
+  // Measures the size of the selected genre and runs a random slice of it through app.runGame()
   // ===============
   grabJSON: (genre) => {
     let subjectString = "https://www.googleapis.com/books/v1/volumes?q=subject:";
@@ -55,13 +55,13 @@ const app = {
   // ===============
   // runGame(index, genre)
   // Runs inside of app.grabJSON()
-  // Runs user input as parameters in the API, then filters the data, adds books to the book array, and updates the DOM
+  // Checks the data, adds the usable books to the book array, and updates the DOM
   // ===============
   runGame: (index, genre) => {
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
       if (data.items === undefined){
-        let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our developer through the "About" page.</p>`;
+        let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our team through the "About" page.</p>`;
         $('#book-container').prepend(errorMessage);
         $('.expand-button').remove();
       } else {
@@ -111,25 +111,15 @@ const app = {
       author: author,
       summary: app.shortenSummary(summary),
       title: title,
-      cover: app.prepareImage(cover),
+      cover: "https://" + cover.split("http://")[1],
       isbn: isbn
       }
       library.bookArray.push(newBook);
     },
 
 // ===============
-// prepareImage(img)
-// Runs inside of app.populateArrays(data)
-// Turns http:// links into https://
-// ===============
-  prepareImage: (img) => {
-    let safeImage = "https://" + img.split("http://")[1];
-    return safeImage;
-  },
-
-// ===============
 // shortenSummary()
-// Runs inside of app.populateArrays()
+// Runs inside of app.addBook()
 // Returns either an abbreviated summary with a read-more, or just a regular summary
 // ===============
   shortenSummary: (summary) => {
