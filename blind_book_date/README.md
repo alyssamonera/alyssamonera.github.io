@@ -130,7 +130,7 @@ To install this app on your local computer:
 
 ## Known Issues
 
-1. **This app requires a Google Books API key to run in its current state.** This app was developed for a General Assembly front-end development project and currently has no back-end to securely store an API key. This is a known issue and will be fixed in a forthcoming update. See Installation below for details on obtaining a key.
+1. **This app requires a Google Books API key to run in its current state.** This app was developed for a General Assembly front-end development project and currently has no back-end to securely store an API key. This is a known issue and will be fixed in a forthcoming update. See Installation for details on obtaining a key.
 
 2. **Data will occasionally fail to load from the API and fail to display summaries on the app page.** If this happens, an error message will usually display instructing the user to refresh the page. If the app page opens with only a read-more inside, please refresh the page and try again. If this doesn't fix the issue, please contact me.
 
