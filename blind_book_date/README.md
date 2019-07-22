@@ -14,7 +14,7 @@ Blind Book Date is a book discovery engine. It pulls book information from an AP
 
 As this is my first application as a budding software engineer, the app is currently run exclusively on front-end technologies.
 
-###Technologies Used
+### Technologies Used
 
 This app currently utilizes HTML5, CSS3, JavaScript, jQuery, JSON/AJAX, and [the Google Books API](https://developers.google.com/books/).
 
@@ -24,7 +24,7 @@ This app currently utilizes HTML5, CSS3, JavaScript, jQuery, JSON/AJAX, and [the
 
 * Major JavaScript/jQuery features include: Object-Oriented Programming (OOP), methods, conditionals, DOM manipulation, saving to local storage
 
-###Approaches Taken
+### Approaches Taken
 
 * Blind Book Dating utilizes local storage to save user input and past matches across multiple pages. Inputs such as genre, number of desired matches, book age, match history, and recent match history are all stored in local storage. **The user's API key is also saved here.**
 
@@ -99,7 +99,7 @@ const storage = {
 
 * When users select new sorting options on this page, the array holding these saved book objects will be re-sorted, and the page will be emptied and refilled using the newly sorted array.
 
-###Instructions
+### Instructions
 
 1. To begin, select a genre. Then input how many books you would like to match with, and pick how "old" or "young" you'd like the books to be. This last part will narrow down how long ago your results were published.<br>If you don't select anything, these values will default to fiction, 5, 1719, and 2019 respectively. Hit "go" when you're ready.
 
@@ -111,7 +111,7 @@ const storage = {
 
 5. At any time after you've matched with a book, regardless of whether you've hit the results screen, you may navigate to your match history and view all the matches you've had so far. The link to this page is located up top, titled "Your Match History." <br> On this page, you may sort through your matches by date added, title, and author. You may also remove any match from your history.
 
-###Installation
+### Installation
 
 To install this app on your local computer:
 
