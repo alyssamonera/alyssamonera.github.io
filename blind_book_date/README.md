@@ -15,6 +15,7 @@ Blind Book Date is a book discovery engine. It pulls book information from an AP
 As this is my first application as a budding software engineer, the app is currently run exclusively on front-end technologies.
 
 ###Technologies Used
+
 This app currently utilizes HTML5, CSS3, JavaScript, jQuery, JSON/AJAX, and [the Google Books API](https://developers.google.com/books/).
 
 * Major HTML features include: links, buttons, modals, input fields, "carousels"
