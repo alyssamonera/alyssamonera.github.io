@@ -55,17 +55,23 @@ const app = {
   // ===============
   // runGame(index, genre)
   // Runs inside of app.grabJSON()
-  // Runs user input as parameters in the API, then filters the data through app.populateArrays() and updates the DOM
+  // Runs user input as parameters in the API, then filters the data, adds books to the book array, and updates the DOM
   // ===============
   runGame: (index, genre) => {
     let key = localStorage.getItem("key");
     $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&startIndex=${index}&maxResults=40&langRestrict=en&key=${key}`, (data) => {
-      for (let i = 0; i < data.items.length; i++){
-        let bookInfo = data.items[i].volumeInfo;
-        let isbn = app.checkBook(bookInfo);
-        if (isbn){app.addBook(bookInfo)};
+      if (data.items === undefined){
+        let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our developer through the "About" page.</p>`;
+        $('#book-container').prepend(errorMessage);
+        $('.expand-button').remove();
+      } else {
+        for (let i = 0; i < data.items.length; i++){
+          let bookInfo = data.items[i].volumeInfo;
+          let isbn = app.checkBook(bookInfo);
+          if (isbn){app.addBook(bookInfo, isbn)};
+        }
+        app.updateDOM();
       }
-      app.updateDOM();
     })
   },
 
@@ -92,35 +98,23 @@ const app = {
   },
 
   // ===============
-  // populateArrays(data)
+  // addBook(bookInfo)
   // Runs inside of app.runGame()
   // Stores books as objects in the library bookArray property
   // ===============
-  populateArrays: (data) => {
-    if (data.items === undefined){
-      let errorMessage = `<h1>We're sorry.</h1><p>We've encountered a problem fetching data from the server. Please refresh the page. If the problem persists, you can contact our developer through the "About" page.</p>`;
-      $('#book-container').prepend(errorMessage);
-      $('.expand-button').remove();
-    } else {
-      for (let i = 0; i < data.items.length; i++){
-        let bookInfo = data.items[i].volumeInfo;
-        let isbn = app.checkBook(bookInfo);
-        if (isbn){
-          let author = bookInfo.authors[0];
-          let summary = bookInfo.description;
-          let title = bookInfo.title;
-          let cover = bookInfo.imageLinks.thumbnail;
-          let newBook = {
-            author: author,
-            summary: app.shortenSummary(summary),
-            title: title,
-            cover: app.prepareImage(cover),
-            isbn: isbn
-            }
-            library.bookArray.push(newBook);
-          }
-        }
+  addBook: (bookInfo, isbn) => {
+    let author = bookInfo.authors[0];
+    let summary = bookInfo.description;
+    let title = bookInfo.title;
+    let cover = bookInfo.imageLinks.thumbnail;
+    let newBook = {
+      author: author,
+      summary: app.shortenSummary(summary),
+      title: title,
+      cover: app.prepareImage(cover),
+      isbn: isbn
       }
+      library.bookArray.push(newBook);
     },
 
 // ===============
@@ -165,6 +159,7 @@ const app = {
   // Resets the appropriate arrays upon page refresh
   // ===============
   reset: () => {
+    library.currentIndex = 0;
     library.bookArray = [];
     localStorage.setItem("newBooks", JSON.stringify(library.bookArray));
   }
