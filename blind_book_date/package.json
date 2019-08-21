@@ -1,0 +1,21 @@
+{
+  "name": "blind_book_date",
+  "version": "1.0.0",
+  "engines":{
+    "node": "12.4.0"
+  },
+  "description": "**NOTE: This app is currently in development.** It was started as a project for [the General Assembly Software Engineering Immersive (Remote)](https://generalassemb.ly/education/software-engineering-immersive/new-york-city) and will likely see further development upon completion of the course.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.10"
+  }
+}
